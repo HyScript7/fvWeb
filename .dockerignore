@@ -1,0 +1,6 @@
+./.obsidian/
+./.git/
+./.gitignore
+./venv/
+./README.md
+./.env

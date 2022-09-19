@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<div class="container text-center"><div class="col-xs-4"><img src="{{ url_for('static', filename='/img/title.png') }}" alt="" /></div></div>
+<br>
+<div class="row">
+    <div class="col-3 bg-warning vh-100">
+      Left
+    </div>
+    <div class="col-6 bg-primary">
+      Middle
+    </div>
+    <div class="col bg-success">
+      Right
+    </div>
+</div>
+<br>
+<div class="bg-dark text-white position-sticky top-100 start-50">
+  <div class="card-body">
+    <div class="row">
+        <div class="col">
+            <h5 class="card-title">Footer Header</h5>
+            <p class="card-text">Placeholder Text</p>
+            <a href="#" class="card-link">Card link</a>
+        </div>
+        <div class="col">
+            <h5 class="card-title">Footer Header</h5>
+            <p class="card-text">Placeholder Text</p>
+            <a href="#" class="card-link">Card link</a>
+        </div>
+        <div class="col">
+            <h5 class="card-title">Footer Header</h5>
+            <p class="card-text">Placeholder Text</p>
+            <a href="#" class="card-link">Card link</a>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

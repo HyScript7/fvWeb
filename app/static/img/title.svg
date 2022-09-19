@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="title.svg"
+   inkscape:export-filename="title.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="178.19091"
+     inkscape:cy="223.44574"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"><inkscape:grid
+       type="xygrid"
+       id="grid4122" /></sodipodi:namedview><defs
+     id="defs2"><linearGradient
+       inkscape:collect="always"
+       id="linearGradient26593"><stop
+         style="stop-color:#7e00fb;stop-opacity:1;"
+         offset="0"
+         id="stop26589" /><stop
+         style="stop-color:#5b00b1;stop-opacity:1;"
+         offset="1"
+         id="stop26591" /></linearGradient><style
+       id="style20266">
+      @font-face {
+        font-family: &quot;Virgil&quot;;
+        src: url(&quot;https://excalidraw.com/Virgil.woff2&quot;);
+      }
+      @font-face {
+        font-family: &quot;Cascadia&quot;;
+        src: url(&quot;https://excalidraw.com/Cascadia.woff2&quot;);
+      }
+    </style><style
+       id="style21012">
+      @font-face {
+        font-family: &quot;Virgil&quot;;
+        src: url(&quot;https://excalidraw.com/Virgil.woff2&quot;);
+      }
+      @font-face {
+        font-family: &quot;Cascadia&quot;;
+        src: url(&quot;https://excalidraw.com/Cascadia.woff2&quot;);
+      }
+    </style><filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter26241"
+       x="-0.013787262"
+       y="-0.025556674"
+       width="1.0275745"
+       height="1.0511133"><feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.1948647"
+         id="feGaussianBlur26243" /></filter><linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient26593"
+       id="linearGradient26595"
+       x1="128.93332"
+       y1="58.256039"
+       x2="129.10893"
+       y2="43.222107"
+       gradientUnits="userSpaceOnUse" /></defs><g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1"><!-- svg-source:excalidraw --><!-- svg-source:excalidraw --><g
+       id="g30834"><rect
+         style="opacity:1;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.36084;stroke-dasharray:none;stroke-opacity:1"
+         id="rect113"
+         width="203.41461"
+         height="111.63918"
+         x="0.68041569"
+         y="0.68041569" /><rect
+         style="opacity:1;mix-blend-mode:normal;fill:#191919;fill-opacity:1;stroke:none;stroke-width:1.37957;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter26241)"
+         id="rect26191"
+         width="207.99455"
+         height="112.20847"
+         x="0.69313949"
+         y="0.69128746"
+         transform="matrix(0.95808332,0,0,0.95808332,2.0833867,2.0851609)" /><text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40.7675px;font-family:Z003;-inkscape-font-specification:'Z003, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:url(#linearGradient26595);fill-opacity:1;stroke:#000000;stroke-width:0.927249;stroke-dasharray:none;stroke-opacity:1"
+         x="17.90744"
+         y="64.953018"
+         id="text381"
+         transform="scale(1.0054111,0.99461803)"><tspan
+           sodipodi:role="line"
+           id="tspan379"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40.7675px;font-family:Z003;-inkscape-font-specification:'Z003, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:url(#linearGradient26595);fill-opacity:1;stroke:#000000;stroke-width:0.927249;stroke-dasharray:none;stroke-opacity:1"
+           x="17.90744"
+           y="64.953018">Fusionverse</tspan></text></g></g><g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Vrstva 2" /></svg>
