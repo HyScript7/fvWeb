@@ -9,15 +9,16 @@ from decouple import config
 
 app = Flask(__name__)
 
-
 @app.route('/')
 def index():
     return render_template('web.html')
 
 @app.route('/dev')
 def dev():
+    #TODO: Load the last 10 or so cards from activity
     temp = request.args.get("template", "index")
-    return render_template(f"{temp}.html")
+    cards = [["HyScript7", "HyScript7 has logged in", "avatar", "Relative Time"], ["Fusionverse", "Server has started!", "avatar", "Relative Time"]]
+    return render_template(f"{temp}.html", cards=cards) 
 
 if __name__ == '__main__':
     from sys import exit

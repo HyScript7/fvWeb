@@ -36,9 +36,28 @@
         </nav>
         {% block content %}
         {% endblock %}
+        <div class="bg-dark text-white position-sticky top-100 start-50">
+            <div class="card-body">
+                <div class="row">
+                <div class="col">
+                        <h5 class="card-title">Footer Header</h5>
+                        <p class="card-text">Placeholder Text</p>
+                        <a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
+                    </div>
+                    <div class="col">
+                        <h5 class="card-title">Footer Header</h5>
+                        <p class="card-text">Placeholder Text</p>
+                        <a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
+                    </div>
+                    <div class="col">
+                        <h5 class="card-title">Social</h5>
+                        <p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
+                        <a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none">Discord</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="{{ url_for('static', filename='/js/popper.min.js') }}"></script>
         <script src="{{ url_for('static', filename='/js/bootstrap.min.js') }}"></script>
     </body>
 </html>
-
-<!-- https://www.digitalocean.com/community/tutorials/how-to-use-templates-in-a-flask-application -->
