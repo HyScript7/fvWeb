@@ -1,37 +1,62 @@
 {% extends "base.html" %}
 {% block content %}
-<br>
-<div class="container text-center"><div class="col-xs-4"><img src="{{ url_for('static', filename='/img/title.png') }}" alt="" /></div></div>
-<br>
-<div class="row">
-    <div class="col-3 bg-warning vh-100">
-      Left
-    </div>
-    <div class="col-6 bg-primary">
-      Middle
-    </div>
-    <div class="col bg-success">
-      Right
-    </div>
+<!-- <div class="container text-center"><div class="col-xs-4"><img src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner" /></div></div>
+-->
+<div class="container-fluid py-3 px-4">
+  <div class="row">
+      <div class="col-2 bg-info">
+        <br>
+        <div class="container-md text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner" /></div>
+        <br>
+        <ul class="list-group list-group-flush border-0 p-2 py-1">
+          <li class="list-group-item border-0">Item 1</li>
+          <li class="list-group-item border-0">Item 2</li>
+          <li class="list-group-item border-0">Item 3</li>
+          <li class="list-group-item border-0">Item 4</li>
+          <li class="list-group-item border-0">Item 5</li>
+        </ul>
+        <br>
+      </div>
+      <div class="col-8 bg-success">
+        <div class="container p-2 text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner" /></div>
+      </div>
+      <div class="col-2 bg-danger">
+        <br>
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4 p-1">
+                <img src="{{ url_for('static', filename='/img/logo.png') }}" class="img-fluid rounded-2 border border-1 border-dark" alt="Avatar">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body p-0 px-1">
+                  <div class="py-1"></div>
+                  <h5 class="card-title">Fusionverse</h5>
+                  <p class="card-text">TestUser has found an arcana!</p>
+                  <p class="float-end p-0 card-text"><small class="text-muted">3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
 </div>
-<br>
 <div class="bg-dark text-white position-sticky top-100 start-50">
   <div class="card-body">
     <div class="row">
-        <div class="col">
+      <div class="col">
             <h5 class="card-title">Footer Header</h5>
             <p class="card-text">Placeholder Text</p>
-            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
         </div>
         <div class="col">
             <h5 class="card-title">Footer Header</h5>
             <p class="card-text">Placeholder Text</p>
-            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
         </div>
         <div class="col">
-            <h5 class="card-title">Footer Header</h5>
-            <p class="card-text">Placeholder Text</p>
-            <a href="#" class="card-link">Card link</a>
+            <h5 class="card-title">Social</h5>
+            <p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
+            <a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none">Discord</a>
         </div>
     </div>
   </div>
