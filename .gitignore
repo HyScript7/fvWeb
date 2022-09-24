@@ -1,6 +1,9 @@
 # obsidian
 .obsidian/
 
+# Folder containing local test stuff
+test/
+
 # I don't even know what this is
 .DS_Store
 
