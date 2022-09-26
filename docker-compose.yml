@@ -2,12 +2,12 @@ version: "3.9"
 services:
   web:
     build: ./app
-    restart: unless-stopped
+    restart: always
     ports:
     - 5000:5000
   db:
     image: mongo
-    restart: unless-stopped
+    restart: always
     ports:
     - 27017:27017
     environment:
