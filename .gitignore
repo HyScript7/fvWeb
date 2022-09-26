@@ -1,6 +1,9 @@
 # obsidian
 .obsidian/
 
+# bootstrap/scss
+app/static/css/bootstrapscss
+
 # Folder containing local test stuff
 test/
 
@@ -114,6 +117,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+app/.env
 .env
 .venv
 env/
