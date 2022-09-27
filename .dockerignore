@@ -4,3 +4,4 @@
 ./venv/
 ./README.md
 ./.env
+./app/static/sass/bootstrap/

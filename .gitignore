@@ -3,6 +3,7 @@
 
 # bootstrap sass
 app/static/sass/bootstrap
+*.scss.css*
 
 # Folder containing local test stuff
 test/

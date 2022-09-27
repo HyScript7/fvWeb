@@ -5,7 +5,19 @@
 
 This is the Fusionverse Web & API Repository
 
-## Docker & Docker Compose
+## Running
+
+Running from source
+
+1) Install python 3.9
+2) Install requirements using `pip install -r ./app/requirements.txt`
+3) Change directory into /app/ or open a new terminal inside the folder
+4) Setup a MongoDB server
+5) Edit .env to match your settings
+6) cd into /static/sass and run the getBootstrap.sh script or getBootstrap.ps1 if you're using powershell.
+7) cd back into /app/ and run `python ./app.py`
+
+## Using Docker & Docker Compose
 
 Building the fvWeb Image:
 
@@ -23,7 +35,14 @@ services:
     build: ./app
     restart: always
     ports:
-    - 5000:5000
+    - 8000:8000
+    environment:
+      DB_HOST: db
+      DB_PORT: 27017
+      DB_USER: root
+      DB_PASS: root
+      FLASK_DEBUG: False
+      FLASK_PORT: 8080
   db:
     image: mongo
     restart: always
