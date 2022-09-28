@@ -5,6 +5,8 @@ COPY . .
 RUN ["python", "-m", "pip", "install", "-r", "./requirements.txt"]
 WORKDIR /app/static/sass/
 RUN "./getBootstrap.sh"
+WORKDIR /app/static/img/
+RUN "./getIcons.sh"
 WORKDIR /app
 
 # Setup Env
@@ -17,5 +19,6 @@ ENV FLASK_PORT=8080
 
 # Expose ports
 EXPOSE ${FLASK_PORT}
+
 # Run the application
 CMD ["python3", "./app.py"]

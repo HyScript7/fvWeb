@@ -45,7 +45,7 @@ app.register_blueprint(web)
 if __name__ == '__main__':
     from sys import exit
     FLASK_DEBUG = config('FLASK_DEBUG').strip()
-    FLASK_PORT = int(config('FLASK_PORT', "27017"))
+    FLASK_PORT = int(config('FLASK_PORT', "8080"))
     if FLASK_DEBUG.lower() == "true" or str(FLASK_DEBUG) == "1":
         app.run(host='0.0.0.0', port=FLASK_PORT, debug=True)
         exit(0)

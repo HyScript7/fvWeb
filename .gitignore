@@ -5,8 +5,15 @@
 app/static/sass/bootstrap
 *.scss.css*
 
+# bootstrap icons
+app/static/img/fonts
+app/static/img/icons
+
 # Folder containing local test stuff
 test/
+
+# Notes
+note_*
 
 # I don't even know what this is
 .DS_Store

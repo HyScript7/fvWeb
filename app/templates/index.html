@@ -17,6 +17,9 @@
       </div>
       <div class="col-8 bg-success">
         <div class="container p-2 text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner"/></div>
+        {% for i in content %}
+        {{ i | safe }}
+        {% endfor %}
       </div>
       <div class="col-2 bg-danger">
         <br>
