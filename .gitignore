@@ -1,13 +1,12 @@
 # obsidian
 .obsidian/
 
-# bootstrap sass
+# Bootstrap sass and icons
 app/static/sass/bootstrap
-*.scss.css*
+app/static/css/icons
 
-# bootstrap icons
-app/static/img/fonts
-app/static/img/icons
+# Compiled sass
+*.scss.css*
 
 # Folder containing local test stuff
 test/

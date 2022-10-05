@@ -5,8 +5,6 @@ COPY . .
 RUN ["python", "-m", "pip", "install", "-r", "./requirements.txt"]
 WORKDIR /app/static/sass/
 RUN "./getBootstrap.sh"
-WORKDIR /app/static/img/
-RUN "./getIcons.sh"
 WORKDIR /app
 
 # Setup Env

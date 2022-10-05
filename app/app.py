@@ -5,6 +5,7 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 
 from flask import Flask
+from flaskext.markdown import Markdown
 from decouple import config
 from pymongo import MongoClient
 from sassutils.wsgi import SassMiddleware
@@ -12,10 +13,10 @@ from routes.api import api
 from routes.web import web
 
 # Database Env Variables
-dbhost = config("DB_HOST", "db").strip()
-dbport = config("DB_PORT", "27017").strip()
-dbuser = config("DB_USER", "root").strip()
-dbpass = config("DB_PASS", "root").strip()
+dbhost = config("DB_HOST", "db").strip()  # type: ignore
+dbport = config("DB_PORT", "27017").strip()  # type: ignore
+dbuser = config("DB_USER", "root").strip()  # type: ignore
+dbpass = config("DB_PASS", "root").strip()  # type: ignore
 
 Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=5000)
 for i in range(3):
@@ -37,6 +38,8 @@ app = Flask(__name__)
 
 app.wsgi_app = SassMiddleware(app.wsgi_app, {__name__: ("static/sass", "static/css", "static/css/")})
 
+Markdown(app)
+
 # Register routes
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(web)
@@ -44,9 +47,9 @@ app.register_blueprint(web)
 # Launch server
 if __name__ == '__main__':
     from sys import exit
-    FLASK_DEBUG = config('FLASK_DEBUG').strip()
+    FLASK_DEBUG = bool(config('FLASK_DEBUG', False).strip())  # type: ignore
     FLASK_PORT = int(config('FLASK_PORT', "8080"))
-    if FLASK_DEBUG.lower() == "true" or str(FLASK_DEBUG) == "1":
+    if FLASK_DEBUG:
         app.run(host='0.0.0.0', port=FLASK_PORT, debug=True)
         exit(0)
     from waitress import serve
