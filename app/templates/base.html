@@ -7,56 +7,62 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='/css/icons/bootstrap-icons.css') }}">
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <img src="{{ url_for('static', filename='/img/logo.png') }}" alt="Fusionverse Logo" width="30" height="30" class="img-fluid d-inline-block">
-            <a class="navbar-brand" href="/">&nbspFusionverse</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <!-- -->
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wiki">Wiki</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/forum">Forum</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">fvWorld</a>
-                </li>
-                <!-- -->
-            </ul>
-            </div>
-        </div>
-        </nav>
-        {% block content %}
-        {% endblock %}
-        <div class="bg-dark text-white position-sticky top-100 start-50">
-            <div class="card-body">
-                <div class="row">
-                <div class="col">
-                        <h5 class="card-title">Footer Header</h5>
-                        <p class="card-text">Placeholder Text</p>
-                        <a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
-                    </div>
-                    <div class="col">
-                        <h5 class="card-title">Footer Header</h5>
-                        <p class="card-text">Placeholder Text</p>
-                        <a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
-                    </div>
-                    <div class="col">
-                        <h5 class="card-title">Social</h5>
-                        <p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
-                        <a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none">Discord</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+		    <img src="{{ url_for('static', filename='/img/logo.png') }}" alt="Fusionverse Logo" width="30" height="30" class="img-fluid d-inline-block">
+		    <a class="navbar-brand" href="/">&nbspFusionverse</a>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+			<!-- -->
+			<li class="nav-item">
+			    <a class="nav-link active" aria-current="page" href="/">Home</a>
+			</li>
+			<li class="nav-item">
+			    <a class="nav-link" href="/wiki">Wiki</a>
+			</li>
+			<li class="nav-item">
+			    <a class="nav-link" href="/forum">Forum</a>
+			</li>
+			<li class="nav-item">
+			    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">fvWorld</a>
+			</li>
+			<!-- -->
+		    </ul>
+		    </div>
+		</div>
+		</nav>
+	</header>
+	<main>
+	{% block content %}
+	{% endblock %}
+	</main>
+	<footer>
+		<div class="bg-dark text-white position-sticky top-100 start-50">
+		    <div class="card-body">
+			<div class="row">
+			<div class="col">
+				<h5 class="card-title">Footer Header</h5>
+				<p class="card-text">Placeholder Text</p>
+				<a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
+			    </div>
+			    <div class="col">
+				<h5 class="card-title">Footer Header</h5>
+				<p class="card-text">Placeholder Text</p>
+				<a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
+			    </div>
+			    <div class="col">
+				<h5 class="card-title">Social</h5>
+				<p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
+				<a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none">Discord</a>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	</footer>
         <script src="{{ url_for('static', filename='/js/popper.min.js') }}"></script>
         <script src="{{ url_for('static', filename='/js/bootstrap.min.js') }}"></script>
     </body>

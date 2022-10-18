@@ -8,13 +8,7 @@ app/static/css/icons
 # Compiled sass
 *.scss.css*
 
-# Folder containing local test stuff
-test/
-
-# Notes
-note_*
-
-# I don't even know what this is
+# MacOS Folder Config Stuff
 .DS_Store
 
 # vscode
@@ -69,6 +63,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+*test*
 
 # Flask stuff:
 instance/

@@ -3,6 +3,13 @@
 # \ \  __\ \ \ \'/   \ \ \/ ".\ \  \ \  __\   \ \  __<   
 #  \ \_\    \ \__|    \ \__/".~\_\  \ \_____\  \ \_____\ 
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
+#
+# fvWeb
+# Version: 1.14
+# Author(s): HyScript7
+# License: MIT LICENSE
+# For more information on copyright and licensing view the README.md file.
+#
 
 from flask import Flask
 from flaskext.markdown import Markdown
@@ -18,20 +25,26 @@ dbport = config("DB_PORT", "27017").strip()  # type: ignore
 dbuser = config("DB_USER", "root").strip()  # type: ignore
 dbpass = config("DB_PASS", "root").strip()  # type: ignore
 
-Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=5000)
-for i in range(3):
-    print(f"[{i+1}/3] Attempting to connect to MongoDB")
-    try:
-        Client.server_info()
-        print(f"[{i+1}/3] Connection successful!")
-        break
-    except KeyboardInterrupt:
-        print(f"[{i+1}/3] Verification skipped by user input")
-        break
-    except Exception:
-        print(f"[{i+1}/3] Connection failed!")
-Database = Client["Fusionverse"]
-Accounts = Database["Accounts"]
+# TODO: Move db connection and testing into functions
+
+dbConnectionTested = False
+
+if not dbConnectionTested:
+    Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=5000)
+    for i in range(3):
+        print(f"[{i+1}/3] Attempting to connect to MongoDB")
+        try:
+            Client.server_info()
+            print(f"[{i+1}/3] Connection successful!")
+            break
+        except KeyboardInterrupt:
+            print(f"[{i+1}/3] Verification skipped by user input")
+            break
+        except Exception:
+            print(f"[{i+1}/3] Connection failed!")
+    dbConnectionTested = True
+    Database = Client["Fusionverse"]
+    Accounts = Database["Accounts"]
 
 # Define application
 app = Flask(__name__)
@@ -55,3 +68,4 @@ if __name__ == '__main__':
     from waitress import serve
     serve(app, host="0.0.0.0", port=FLASK_PORT)
     exit()
+
