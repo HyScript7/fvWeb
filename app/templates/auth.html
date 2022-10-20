@@ -1,0 +1,6 @@
+{% extends "index.html" %}
+{% block content %}
+<h1>fvWeb Authentication</h1>
+<p>This is the route for authentication.<br>It will be remade later to look like a full login & register page.</p>
+<!-- Begin Auth --><div class="row"><div class="col-5"><div class="container p-2 mb-2 bg-dark text-light border-secondary border"><p>Current Session: {{ session['authSession'][0] if session['authSession'] else 'Logged out' }}</p><form id="fvAuth_LoginForm"><div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div><div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div><button type="submit" formmethod="POST" formaction="/api/auth/login" class="btn btn-primary">Login</button><button type="submit" formmethod="POST" formaction="/api/auth/logout" class="btn btn-secondary">Logout</button></form></div></div><div class="col"></div></div><!-- End Auth -->
+{% endblock %}

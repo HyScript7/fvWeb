@@ -5,17 +5,18 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 #
 # fvWeb
-# Version: 1.14
+# Version: 1.15
 # Author(s): HyScript7
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
 
-from flask import Flask
+from flask import Flask, session
 from flaskext.markdown import Markdown
 from decouple import config
 from pymongo import MongoClient
 from sassutils.wsgi import SassMiddleware
+from datetime import timedelta
 from routes.api import api
 from routes.web import web
 
@@ -27,10 +28,12 @@ dbpass = config("DB_PASS", "root").strip()  # type: ignore
 
 # TODO: Move db connection and testing into functions
 
-dbConnectionTested = False
+dbConnectionTested = True
 
 if not dbConnectionTested:
     Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=5000)
+    Database = Client["Fusionverse"]
+    Accounts = Database["Accounts"]
     for i in range(3):
         print(f"[{i+1}/3] Attempting to connect to MongoDB")
         try:
@@ -43,15 +46,21 @@ if not dbConnectionTested:
         except Exception:
             print(f"[{i+1}/3] Connection failed!")
     dbConnectionTested = True
-    Database = Client["Fusionverse"]
-    Accounts = Database["Accounts"]
 
 # Define application
 app = Flask(__name__)
 
+# SASS Compilation
 app.wsgi_app = SassMiddleware(app.wsgi_app, {__name__: ("static/sass", "static/css", "static/css/")})
 
+# Markdown Support
 Markdown(app)
+
+# Setup Session
+session_lifetime = int(config("FVWEB_SESSION_LIFETIME", 15))
+
+app.secret_key = str(config("FVWEB_SESSION_SECRET", "fvWebS3CR37")).strip()
+app.permanent_session_lifetime = timedelta(minutes=session_lifetime)
 
 # Register routes
 app.register_blueprint(api, url_prefix='/api')
@@ -68,4 +77,3 @@ if __name__ == '__main__':
     from waitress import serve
     serve(app, host="0.0.0.0", port=FLASK_PORT)
     exit()
-
