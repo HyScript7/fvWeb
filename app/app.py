@@ -5,13 +5,14 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 #
 # fvWeb
-# Version: 1.15
+# Version: 2.0
 # Author(s): HyScript7
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
 
-from flask import Flask, session
+import asyncio
+from flask import Flask
 from flaskext.markdown import Markdown
 from decouple import config
 from pymongo import MongoClient
@@ -21,31 +22,12 @@ from routes.api import api
 from routes.web import web
 
 # Database Env Variables
-dbhost = config("DB_HOST", "db").strip()  # type: ignore
-dbport = config("DB_PORT", "27017").strip()  # type: ignore
-dbuser = config("DB_USER", "root").strip()  # type: ignore
-dbpass = config("DB_PASS", "root").strip()  # type: ignore
+dbhost = config("DB_HOST", "db")
+dbport = config("DB_PORT", "27017")
+dbuser = config("DB_USER", "root")
+dbpass = config("DB_PASS", "root")
 
-# TODO: Move db connection and testing into functions
-
-dbConnectionTested = True
-
-if not dbConnectionTested:
-    Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=5000)
-    Database = Client["Fusionverse"]
-    Accounts = Database["Accounts"]
-    for i in range(3):
-        print(f"[{i+1}/3] Attempting to connect to MongoDB")
-        try:
-            Client.server_info()
-            print(f"[{i+1}/3] Connection successful!")
-            break
-        except KeyboardInterrupt:
-            print(f"[{i+1}/3] Verification skipped by user input")
-            break
-        except Exception:
-            print(f"[{i+1}/3] Connection failed!")
-    dbConnectionTested = True
+db_Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=3000)
 
 # Define application
 app = Flask(__name__)
@@ -57,23 +39,27 @@ app.wsgi_app = SassMiddleware(app.wsgi_app, {__name__: ("static/sass", "static/c
 Markdown(app)
 
 # Setup Session
-session_lifetime = int(config("FVWEB_SESSION_LIFETIME", 15))
-
 app.secret_key = str(config("FVWEB_SESSION_SECRET", "fvWebS3CR37")).strip()
-app.permanent_session_lifetime = timedelta(minutes=session_lifetime)
+app.permanent_session_lifetime = timedelta(minutes=int(config("FVWEB_SESSION_LIFETIME", 15)))
 
 # Register routes
 app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(web)
 
+# Define Main Function
+async def main() -> None:
+    global x
+    FLASK_DEBUG = str(config('FLASK_DEBUG', "false")).lower() == "true"
+    FLASK_PORT = int(config('FLASK_PORT', "8080"))
+    if FLASK_DEBUG:
+        app.run(host='0.0.0.0', port=FLASK_PORT, debug=FLASK_DEBUG)
+        return
+    serve(app, host="0.0.0.0", port=FLASK_PORT)
+    return
+
 # Launch server
 if __name__ == '__main__':
     from sys import exit
-    FLASK_DEBUG = bool(config('FLASK_DEBUG', False).strip())  # type: ignore
-    FLASK_PORT = int(config('FLASK_PORT', "8080"))
-    if FLASK_DEBUG:
-        app.run(host='0.0.0.0', port=FLASK_PORT, debug=True)
-        exit(0)
     from waitress import serve
-    serve(app, host="0.0.0.0", port=FLASK_PORT)
-    exit()
+    asyncio.run(main())
+    exit(0)

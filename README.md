@@ -59,17 +59,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-  dbadmin:
-    image: mongo-express
-    restart: always
-    ports:
-    - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
-      ME_CONFIG_MONGODB_SERVER: db
-      ME_CONFIG_OPTIONS_EDITORTHEME: ayu-dark
 ```
 
 Create a new instance of fvWeb using the command below

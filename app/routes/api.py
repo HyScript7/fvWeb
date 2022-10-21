@@ -5,22 +5,40 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 #
 # fvWeb
-# Version: 1.15
+# Version: 2.0
 # Author(s): HyScript7
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
 from flask import Blueprint, session, request, redirect
-from flask.wrappers import Response 
+from flask.wrappers import Response
+from pymongo import MongoClient
+from decouple import config
+
+dbhost = config("DB_HOST", "db")
+dbport = config("DB_PORT", "27017")
+dbuser = config("DB_USER", "root")
+dbpass = config("DB_PASS", "root")
+
+db_Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=3000)
 
 api = Blueprint("api", __name__)
 
 @api.route("/")
-def test():
+async def test():
     return Response("OK", status=200)
 
+@api.route("/db")
+async def testdb():
+    try:
+        db_Client.server_info()
+        connected = True
+    except:
+        connected = False
+    return str(connected)
+
 @api.route("/auth/login", methods=["GET", "POST"])
-def login():
+async def login():
     try:
         session["authSession"] # Will raise KeyError if no session is active
         return redirect(request.referrer, Response=Response("Already logged in", status=200))
@@ -35,7 +53,7 @@ def login():
         return redirect(request.referrer, Response=Response("Logged in", status=200))
 
 @api.route("/auth/logout", methods=["GET", "POST"])
-def logout():
+async def logout():
     try:
         session["authSession"] # Will raise KeyError if no session is active
         session.pop("authSession", None)
@@ -44,7 +62,7 @@ def logout():
         return redirect(request.referrer, Response=Response("No Session", status=200))
 
 @api.route("/auth/check", methods=["GET", "POST"])
-def check():
+async def check():
     try:
         sessionID = session["authSession"]
         return Response(str(sessionID), status=200)
@@ -53,5 +71,5 @@ def check():
 
 # When calling the auth routes directly, you will get redirected here.
 @api.route("/auth/None")
-def fallback():
+async def fallback():
     return redirect("/")
