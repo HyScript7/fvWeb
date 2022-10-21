@@ -5,11 +5,14 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 #
 # fvWeb
-# Version: 2.0
+# Version: 2.1
 # Author(s): HyScript7
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
+import uuid
+import hashlib
+import base64
 from flask import Blueprint, session, request, redirect
 from flask.wrappers import Response
 from pymongo import MongoClient
@@ -24,52 +27,101 @@ db_Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverS
 
 api = Blueprint("api", __name__)
 
+#TODO: Might be a good idea to store this in the database instead - Will be easier to implement with an Admin interface on the web it self later.
+with open("./static/img/default_avatar.png", "rb") as defavt:
+    defaultavatar = "data:image/png;base64," + base64.b64encode(defavt.read()).decode("utf-8")
+
+async def isTaken(username=None, email=None) -> bool:
+    queryUsername = db_Client["fvWeb"]["Accounts"].find_one({"username": username})
+    queryEmail = db_Client["fvWeb"]["Accounts"].find_one({"email": email})
+    if queryUsername and not username is None:
+        return True
+    if queryEmail and not email is None:
+        return True
+    return False
+
+async def getUUID(username: str) -> str:
+    query = db_Client["fvWeb"]["Accounts"].find_one({"username": username})
+    return query["uuid"]
+
+async def checkPassword(username: str, password: str) -> bool:
+    query = db_Client["fvWeb"]["Accounts"].find_one({"username": username})
+    return query["password"] == password
+
 @api.route("/")
-async def test():
+async def root():
     return Response("OK", status=200)
 
-@api.route("/db")
-async def testdb():
+@api.route("/auth/register", methods=["POST"])
+async def auth_register():
     try:
-        db_Client.server_info()
-        connected = True
-    except:
-        connected = False
-    return str(connected)
-
-@api.route("/auth/login", methods=["GET", "POST"])
-async def login():
-    try:
-        session["authSession"] # Will raise KeyError if no session is active
-        return redirect(request.referrer, Response=Response("Already logged in", status=200))
+        session["authSession"] # Will raise KeyError if no session is active, meaning the line below will not get executed.
+        redirect_url = request.referrer
+        if request.referrer is None:
+            redirect_url = "/"
+        return redirect(redirect_url, Response=Response("Already logged in", status=400))
     except KeyError:
-        if request.method == "POST":
-            username = request.form["username"]
-            password = request.form["password"]
+        email = request.form["email"]
+        username = request.form["username"]
+        password = hashlib.sha256(request.form["password"].encode("utf-8")).hexdigest()
+        avatar = request.files["avatar"] # Avatar file
+        avatar_data = avatar.stream.read()
+        if not len(avatar_data):
+            avatar = defaultavatar
         else:
-            username = request.args.get("username", "username")
-            password = request.args.get("password", "password")
-        session["authSession"] = [username, password]
-        return redirect(request.referrer, Response=Response("Logged in", status=200))
+            avatar = "data:image/png;base64," + base64.b64encode(avatar_data).decode()
+        # Check if the username or email are taken.
+        if await isTaken(username, email):
+            return redirect("/auth?error=3", Response=Response("Username or Email already taken", status=400))
+        UUID = uuid.uuid3(uuid.uuid1(), uuid.uuid4().hex).hex
+        db_Client["fvWeb"]["Accounts"].insert_one({"uuid": UUID, "email": email, "username": username, "password": password, "avatar": avatar})
+        return redirect("/auth", Response=Response("Successfuly Registered", status=200))
+
+@api.route("/auth/login", methods=["POST"])
+async def auth_login():
+    try:
+        session["authSession"] # Will raise KeyError if no session is active, meaning the line below will not get executed.
+        redirect_url = request.referrer
+        if request.referrer is None:
+            redirect_url = "/"
+        return redirect(redirect_url, Response=Response("Already logged in", status=200))
+    except KeyError:
+        username = request.form["username"]
+        password = hashlib.sha256(request.form["password"].encode("utf-8")).hexdigest()
+        if not await isTaken(username):
+            return redirect("/auth?error=2", Response=Response("Invalid Username", status=400))
+        if not await checkPassword(username, password):
+            return redirect("/auth?error=2", Response=Response("Invalid Username", status=400))
+        # Set Session
+        uuid = await getUUID(username)
+        session["authSession"] = [uuid, username]
+        # Redirect
+        redirect_url = request.referrer
+        if request.referrer is None:
+            redirect_url = "/"
+        return redirect(redirect_url, Response=Response("Logged in", status=200))
 
 @api.route("/auth/logout", methods=["GET", "POST"])
-async def logout():
+async def auth_logout():
     try:
-        session["authSession"] # Will raise KeyError if no session is active
+        session["authSession"] # Will raise KeyError if no session is active, meaning the line below will not get executed.
         session.pop("authSession", None)
-        return redirect(request.referrer, Response=Response("Logged out", status=200))
+        redirect_url = request.referrer
+        if request.referrer is None:
+            redirect_url = "/"
+        redirect_url.replace.replace("error", "experror")
+        return redirect(redirect_url, Response=Response("Logged out", status=200))
     except KeyError:
-        return redirect(request.referrer, Response=Response("No Session", status=200))
+        redirect_url = request.referrer
+        if request.referrer is None:
+            redirect_url = "/"
+        redirect_url.replace.replace("error", "experror")
+        return redirect(redirect_url, Response=Response("No Session", status=200))
 
 @api.route("/auth/check", methods=["GET", "POST"])
-async def check():
+async def auth_check():
     try:
         sessionID = session["authSession"]
         return Response(str(sessionID), status=200)
     except KeyError:
         return Response("No Session", status=200)
-
-# When calling the auth routes directly, you will get redirected here.
-@api.route("/auth/None")
-async def fallback():
-    return redirect("/")

@@ -45,12 +45,20 @@ services:
     ports:
     - 8080:8080
     environment:
-      DB_HOST: db
+      DB_HOST: 172.20.7.3
       DB_PORT: 27017
       DB_USER: root
       DB_PASS: root
       FLASK_DEBUG: False
       FLASK_PORT: 8080
+      FVWEB_SESSION_SECRET: S3CR37_CH4NG3_M3
+      FVWEB_SESSION_LIFETIME: 15
+    networks:
+      fvWeb:
+        ipv4_address: 172.20.7.2
+    depends_on:
+      - db
+
   db:
     image: mongo
     restart: always
@@ -59,6 +67,16 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      fvWeb:
+        ipv4_address: 172.20.7.3
+
+networks:
+  fvWeb:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.7.0/16
 ```
 
 Create a new instance of fvWeb using the command below

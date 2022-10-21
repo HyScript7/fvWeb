@@ -5,7 +5,7 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 #
 # fvWeb
-# Version: 2.0
+# Version: 2.1
 # Author(s): HyScript7
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
@@ -23,30 +23,40 @@ db_Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverS
 
 web = Blueprint("web", __name__)
 
+async def getUsers():
+    r = [["Admin", "Currently displaying all registered users for debugging and development purposes.", url_for("static", filename="/img/logo.png"), "Relative Time"]]
+    for i in db_Client["fvWeb"]["Accounts"].find():
+        r.append([i["username"], i["email"], i["avatar"], "Relative Time"])
+    return r
+
+async def getCards():
+    return await getUsers()
+
 @web.route("/")
 async def home(): 
-    cards = [["Title", "Description", "#", "Relative Time"]]
-    return render_template("index.html", cards=cards) 
+    cards = await getCards()
+    return render_template("home.html", cards=cards) 
 
 @web.route("/auth")
 async def auth():
-    cards = [["Title", "Description", "#", "Relative Time"]]
-    return render_template("auth.html", cards=cards) 
+    error = request.args.get("error", 0)
+    cards = await getCards()
+    return render_template("auth.html", cards=cards, error=error)
 
 @web.route("/wiki")
 async def wiki(): 
-    cards = [["Title", "Description", "#", "Relative Time"]]
-    return render_template("index.html", cards=cards) 
+    cards = await getCards()
+    return render_template("home.html", cards=cards) 
 
 @web.route("/forum")
 async def forum(): 
-    cards = [["Title", "Description", "#", "Relative Time"]]
-    return render_template("index.html", cards=cards) 
+    cards = await getCards()
+    return render_template("home.html", cards=cards) 
 
 @web.route("/dev")
 async def dev():
-    temp = request.args.get("template", "index")
-    cards = [["Title", "Description", "#", "Relative Time"]]
+    temp = request.args.get("template", "home")
+    cards = await getCards()
     return render_template(f"{temp}.html", cards=cards) 
 
 @web.route("/favicon.ico")
