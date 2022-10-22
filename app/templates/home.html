@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block content %}
 <div class="container p-2 text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner"/></div>
-<p>{{ "Hello, " + session['authSession'][1] + "!" if session['authSession'] else "You are not logged in currently" }}</p>
+<h1>{{ "Hello, " + session['authSession'][1] + "!" if session['authSession'] else "You are not logged in currently" }}</h1>
 <p>Login <a href="/auth" class="link-dark">Here</a></p>
 {% endblock %}
 

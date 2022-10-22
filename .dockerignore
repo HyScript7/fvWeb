@@ -5,4 +5,4 @@
 ./README.md
 ./.env
 ./app/static/sass/bootstrap/
-./app/static/img/icons/
+./app/static/css/icons/

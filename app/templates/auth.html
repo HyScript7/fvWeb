@@ -1,7 +1,8 @@
 {% extends "index.html" %}
 {% block content %}
-<h1>fvWeb Authentication</h1>
-<p>This is the route for authentication.<br>It will be remade later to look like a full login & register page.</p>
+
+<!-- Begin Alerts -->
+<br>
 {% if error|int==1 %}
 <div class="alert alert-warning d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspYou must specify an email address!</div></div>
 {% elif error|int==2 %}
@@ -9,6 +10,13 @@
 {% elif error|int==3 %}
 <div class="alert alert-danger d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspThe username and/or email have already been registered!</div></div>
 {% endif %}
+<!-- End Alerts -->
+
+<h1>fvWeb Authenticaton</h1>
+
+{% if version == "old" %}
+<h2>Old Dialogs using rows, cols and containers</h2>
+<br>
 <!-- Begin Login -->
 <div class="row"><div class="col-5"><div class="container p-2 mb-2 bg-dark text-light border-secondary border">
     <h3>Login</h3>
@@ -34,4 +42,77 @@
         <button type="submit" formmethod="POST" formaction="/api/auth/register" class="btn btn-success">Register</button>
 </form></div></div><div class="col"></div></div>
 <!-- End Register -->
+{% elif version == "new" %}
+<br>
+<h2>New Dialogs using Cards</h2>
+<!-- Begin Size Select -->
+{% if request.args.get("size")|int %}
+{% set cardSize = request.args.get("size")|int*25 %}
+{% else %}
+{% set cardSize = 50 %}
+{% endif %}
+<div class="card w-50">
+  <div class="card-header">
+    Card Size Selector
+  </div>
+  <div class="card-body">
+    <form id="sizeForm">
+        <div class="input-group mb-3">
+            ({{(cardSize/25)|int}}) Card Size: 
+            <input type="range" class="form-range form-control border-0 p-2" min="1" max="4" name="size" id="cardSizeRange" value="{{cardSize/25}}">
+        </div>
+        <div class="input-group mb-3">
+            <select class="form-select" aria-label="Version Selector"><option selected value="new">Version: New</option></select>
+            <button type="submit" formmethod="GET" formaction="?version=new&" class="btn btn-warning">Reload with new Settings</button>
+        </div>
+    </form>
+  </div>
+</div>
+<!-- End Size Select-->
+<br>
+
+<!-- Begin Login Card -->
+<div class="card w-{{cardSize}}">
+    <div class="card-header">
+        Login
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Login</h5>
+        <p class="card-text">{{ 'Logged in as ' + session['authSession'][1] if session['authSession'] else 'Logged out' }}</p>
+        <form id="fvAuth_LoginForm">
+            <div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div>
+            <div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div>
+            <button type="submit" formmethod="POST" formaction="/api/auth/login" class="btn btn-primary">Login</button>
+            <button type="submit" formmethod="POST" formaction="/api/auth/logout" class="btn btn-secondary">Logout</button>
+        </form>
+    </div>
+</div>
+<!-- End Login Card -->
+<br>
+<!-- Begin Register Card -->
+<div class="card w-{{cardSize}}">
+    <div class="card-header">
+        Register
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Register</h5>
+        <form id="fvAuth_LoginForm" enctype="multipart/form-data">
+            <div class="mb-3"><input type="email" class="form-control" name="email" id="fvAuth_Email" placeholder="Email"></div>
+            <div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div>
+            <div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div>
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" name="avatar" id="fvAuth_Avatar">
+                <label class="input-group-text" for="fvAuth_Avatar">Avatar</label>
+            </div>
+            <button type="submit" formmethod="POST" formaction="/api/auth/register" class="btn btn-success">Register</button>
+        </form>
+    </div>
+</div>
+<!-- End Register Card -->
+{% else %}
+<p>Please select which fvAuth page you wish to view</p>
+<div class="bg-dark m-2 p-2"><a class="link-danger" href="?version=old">View Old</a></div>
+<div class="bg-dark m-2 p-2"><a class="link-success" href="?version=new">View New</a></div>
+{% endif %}
+
 {% endblock %}

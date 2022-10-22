@@ -33,19 +33,23 @@ with open("./static/img/default_avatar.png", "rb") as defavt:
 
 async def isTaken(username=None, email=None) -> bool:
     queryUsername = db_Client["fvWeb"]["Accounts"].find_one({"username": username})
-    queryEmail = db_Client["fvWeb"]["Accounts"].find_one({"email": email})
     if queryUsername and not username is None:
         return True
+    queryEmail = db_Client["fvWeb"]["Accounts"].find_one({"email": email})
     if queryEmail and not email is None:
         return True
     return False
+
+async def getUser(uuid: str) -> dict:
+    query = db_Client["fvWeb"]["Accounts"].find_one({"uuid": uuid})
+    return query
 
 async def getUUID(username: str) -> str:
     query = db_Client["fvWeb"]["Accounts"].find_one({"username": username})
     return query["uuid"]
 
-async def checkPassword(username: str, password: str) -> bool:
-    query = db_Client["fvWeb"]["Accounts"].find_one({"username": username})
+async def checkPassword(uuid: str, password: str) -> bool:
+    query = db_Client["fvWeb"]["Accounts"].find_one({"uuid": uuid})
     return query["password"] == password
 
 @api.route("/")
@@ -90,10 +94,10 @@ async def auth_login():
         password = hashlib.sha256(request.form["password"].encode("utf-8")).hexdigest()
         if not await isTaken(username):
             return redirect("/auth?error=2", Response=Response("Invalid Username", status=400))
-        if not await checkPassword(username, password):
+        uuid = await getUUID(username)
+        if not await checkPassword(uuid, password):
             return redirect("/auth?error=2", Response=Response("Invalid Username", status=400))
         # Set Session
-        uuid = await getUUID(username)
         session["authSession"] = [uuid, username]
         # Redirect
         redirect_url = request.referrer
@@ -109,13 +113,13 @@ async def auth_logout():
         redirect_url = request.referrer
         if request.referrer is None:
             redirect_url = "/"
-        redirect_url.replace.replace("error", "experror")
+        redirect_url.replace("error", "experror")
         return redirect(redirect_url, Response=Response("Logged out", status=200))
     except KeyError:
         redirect_url = request.referrer
         if request.referrer is None:
             redirect_url = "/"
-        redirect_url.replace.replace("error", "experror")
+        redirect_url.replace("error", "experror")
         return redirect(redirect_url, Response=Response("No Session", status=200))
 
 @api.route("/auth/check", methods=["GET", "POST"])

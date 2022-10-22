@@ -40,8 +40,9 @@ async def home():
 @web.route("/auth")
 async def auth():
     error = request.args.get("error", 0)
+    version = request.args.get("version", "none")
     cards = await getCards()
-    return render_template("auth.html", cards=cards, error=error)
+    return render_template("auth.html", cards=cards, error=error, version=version)
 
 @web.route("/wiki")
 async def wiki(): 
