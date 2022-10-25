@@ -17,20 +17,11 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
-					<!-- -->
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/wiki">Wiki</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/forum">Forum</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">fvWorld</a>
-					</li>
-					<!-- -->
+						{% for link in navBarLinks %}
+						<li class="nav-item">
+							<a class="nav-link{{' disabled' if link[2]}}{{' active' if link[0] == thisPage}}" href="{{link[1]}}">{{link[0]}}</a>
+						</li>
+						{% endfor %}
 					</ul>
 				</div>
 				<!-- Begin Auth Dropdown -->
@@ -39,7 +30,7 @@
 						{% if session["authSession"] %}
 						<img src="#" alt="Avatar"> {{ session["authSession"][1] }}
 						{% else %}
-						You are not logged in
+						<i class="bi bi-key"></i>&nbspYou are not logged in
 						{% endif %}
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -67,19 +58,20 @@
 		    <div class="card-body">
 			<div class="row">
 			<div class="col">
-				<h5 class="card-title">Footer Header</h5>
-				<p class="card-text">Placeholder Text</p>
+				<h5 class="card-title">About</h5>
+				<p class="card-text">fvWeb is a web app written in Flask providing a Forum and Wiki for Fusionverse. To learn more, click one of the links below to see what interests you.</p>
+				<a href="/about" class="card-link link-secondary text-decoration-none"><i class="bi bi-card-text"></i>&nbspAbout</a><br>
 				<a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
 			    </div>
 			    <div class="col">
-				<h5 class="card-title">Footer Header</h5>
-				<p class="card-text">Placeholder Text</p>
-				<a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
+				<h5 class="card-title">Source Code</h5>
+				<p class="card-text">You can view the fvWeb and game source code on GitHub. The fvWeb project is open and you're free to fork it for your own creations.</p>
+				<a href="https://github.com/HyScript7/fvWeb" class="card-link link-secondary text-decoration-none"><i class="bi bi-github"></i>&nbspGitHub</a>
 			    </div>
 			    <div class="col">
 				<h5 class="card-title">Social</h5>
 				<p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
-				<a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none">Discord</a>
+				<a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none"><i class="bi bi-discord"></i>&nbspDiscord</a>
 			    </div>
 			</div>
 		    </div>

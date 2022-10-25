@@ -32,33 +32,43 @@ async def getUsers():
 async def getCards():
     return await getUsers()
 
+navBarLinks = [
+    ["Home", "/", False],
+    ["Wiki", "/wiki", False],
+    ["Forum", "/forum", False],
+    ["fvWorld", "#", True],
+    ["fvCards", "#", True]
+    # linkName, Href, Disabled
+]
+
 @web.route("/")
 async def home(): 
     cards = await getCards()
-    return render_template("home.html", cards=cards) 
+    return render_template("home.html", thisPage="Home",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/auth")
 async def auth():
     error = request.args.get("error", 0)
     version = request.args.get("version", "none")
     cards = await getCards()
-    return render_template("auth.html", cards=cards, error=error, version=version)
+    return render_template("auth.html", thisPage="Auth",cards=cards, navBarLinks=navBarLinks, error=error, version=version)
 
 @web.route("/wiki")
 async def wiki(): 
     cards = await getCards()
-    return render_template("home.html", cards=cards) 
+    return render_template("home.html", thisPage="Wiki",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/forum")
 async def forum(): 
     cards = await getCards()
-    return render_template("home.html", cards=cards) 
+    return render_template("home.html", thisPage="Forum",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/dev")
 async def dev():
     temp = request.args.get("template", "home")
+    tempage = request.args.get("thisPage", "Home")
     cards = await getCards()
-    return render_template(f"{temp}.html", cards=cards) 
+    return render_template(f"{temp}.html", thisPage=f"{tempage}",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/favicon.ico")
 async def favicon():

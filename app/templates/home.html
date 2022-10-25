@@ -1,7 +1,12 @@
 {% extends "index.html" %}
 {% block content %}
-<div class="container p-2 text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner"/></div>
-<h1>{{ "Hello, " + session['authSession'][1] + "!" if session['authSession'] else "You are not logged in currently" }}</h1>
-<p>Login <a href="/auth" class="link-dark">Here</a></p>
+<div class="container p-2 text-center"><img class="img-fluid w-50" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner"/></div>
+{% if session['authSession'] %}
+<h1>Hello, {{session['authSession'][1]}}!</h1>
+<p>You can logout either on the top right panel or <a href="/auth?version=new" class="link-dark">Here</a></p>
+{% else %}
+<h1>Welcome to Fusionverse!</h1>
+<h2>You are currently not logged in&nbsp<i class="bi bi-key-fill"></i></h2>
+<p>You can login or register <a href="/auth?version=new" class="link-dark">Here</a></p>
+{% endif %}
 {% endblock %}
-
