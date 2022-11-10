@@ -15,6 +15,7 @@ from flask import Flask
 from flaskext.markdown import Markdown
 from decouple import config
 from pymongo import MongoClient
+from pymongo.errors import ServerSelectionTimeoutError
 from sassutils.wsgi import SassMiddleware
 from datetime import timedelta
 from routes.api import api
@@ -47,12 +48,20 @@ app.register_blueprint(web)
 
 # Define Main Function
 async def main() -> None:
-    global x
     FLASK_DEBUG = str(config('FLASK_DEBUG', "false")).lower() == "true"
     FLASK_PORT = int(config('FLASK_PORT', "8080"))
     if FLASK_DEBUG:
         app.run(host='0.0.0.0', port=FLASK_PORT, debug=FLASK_DEBUG)
         return
+    for i in range(5):
+        try:
+            db_Client.server_info()
+            print(f"[{i+1}/5] MongoDB connection verified")
+        except ServerSelectionTimeoutError:
+            print(f"[{i+1}/5] MongoDB connection timed out")
+            if i == 2:
+                print("Quitting: Application isn't in debug mode, but the database cannot be contacted!")
+                return
     serve(app, host="0.0.0.0", port=FLASK_PORT)
     return
 
