@@ -3,7 +3,7 @@
 <div class="container-fluid"> <!-- py-3 px-4 -->
 	<div class="row">
 		<!-- Navigation Sidebar -->
-		<div class="col-2 bg-info">
+		<div class="col-lg-2 bg-info">
 			<nav>
 				<br>
 				<div class="container-md text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner"/></div>
@@ -16,19 +16,20 @@
 					<li class="list-group-item border-0">Item 5</li>
 				</ul>
 				<br>
+				<iframe src="https://discord.com/widget?id=1007658112297218181&theme=dark" width="100%" height="500px" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 			</nav>
 		</div>
 		<!-- Main Content -->
-		<div class="col-8 bg-success">
+		<div class="col-lg-8 bg-success">
 			{% block content %}
 			{% endblock %}
 			<br>
 		</div>
 		<!-- Activity Cards -->
-		<div class="col-2 bg-danger">
+		<div class="col-lg-2 bg-danger">
 			<br>
 			{% for i in cards %}
-			<div class="card mb-3" style="max-width: 540px;">
+			<div class="card mb-3">
 				<div class="row g-0">
 					<div class="col-md-4 p-1">
 						<img src="{{i[2]}}" class="img-fluid rounded-2 border border-1 border-dark" alt="User Avatar">

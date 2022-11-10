@@ -2,6 +2,7 @@ FROM python
 WORKDIR /app
 COPY . .
 # Install requirements
+RUN ["pip", "install", "--upgrade", "pip"]
 RUN ["python", "-m", "pip", "install", "-r", "./requirements.txt"]
 WORKDIR /app/static/sass/
 RUN "./getBootstrap.sh"

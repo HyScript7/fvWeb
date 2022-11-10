@@ -10,7 +10,6 @@
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
-
 import asyncio
 from flask import Flask
 from flaskext.markdown import Markdown

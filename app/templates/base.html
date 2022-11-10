@@ -28,20 +28,20 @@
 				<div class="dropdown">
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 						{% if session["authSession"] %}
-						<img src="#" alt="Avatar"> {{ session["authSession"][1] }}
+							<img src="#" alt="Avatar"> {{ session["authSession"][1] }}
 						{% else %}
-						<i class="bi bi-key"></i>&nbspYou are not logged in
+							<i class="bi bi-key"></i>&nbspYou are not logged in
 						{% endif %}
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 						{% if session["authSession"] %}
-						<li><div><img src="#" alt="Avatar">{{ session["authSession"][1] }}</div></li>
-						<li><a class="dropdown-item" href="#">My Profile</a></li>
-						<li><a class="dropdown-item" href="#">Settings</a></li>
-						<li><a class="dropdown-item" href="/api/auth/logout">Logout</a></li>
+							<li><div><img src="#" alt="Avatar">{{ session["authSession"][1] }}</div></li>
+							<li><a class="dropdown-item" href="#">My Profile</a></li>
+							<li><a class="dropdown-item" href="#">Settings</a></li>
+							<li><a class="dropdown-item" href="/api/auth/logout">Logout</a></li>
 						{% else %}
-						<li><a class="dropdown-item" href="/auth">Login</a></li>
-						<li><a class="dropdown-item" href="/auth">Register</a></li>
+							<li><a class="dropdown-item" href="/auth">Login</a></li>
+							<li><a class="dropdown-item" href="/auth">Register</a></li>
 						{% endif %}
 					</ul>
 				</div>
@@ -54,7 +54,7 @@
 	{% endblock %}
 	</main>
 	<footer>
-		<div class="bg-dark text-white position-sticky top-100 start-50">
+		<div class="bg-dark text-white position-sticky top-100 start-50 p-3">
 		    <div class="card-body">
 			<div class="row">
 			<div class="col">

@@ -23,14 +23,11 @@ db_Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverS
 
 web = Blueprint("web", __name__)
 
-async def getUsers():
-    r = [["Admin", "Currently displaying all registered users for debugging and development purposes.", url_for("static", filename="/img/logo.png"), "Relative Time"]]
-    for i in db_Client["fvWeb"]["Accounts"].find():
-        r.append([i["username"], i["email"], i["avatar"], "Relative Time"])
-    return r
-
 async def getCards():
-    return await getUsers()
+    r = []
+    for i in db_Client["fvWeb"]["Activity"].find():
+        r.append([i["title"], i["description"], i["avatar"], "Relative Time"])
+    return r
 
 navBarLinks = [
     ["Home", "/", False],
@@ -50,8 +47,9 @@ async def home():
 async def auth():
     error = request.args.get("error", 0)
     version = request.args.get("version", "none")
+    size = request.args.get("size", 2)
     cards = await getCards()
-    return render_template("auth.html", thisPage="Auth",cards=cards, navBarLinks=navBarLinks, error=error, version=version)
+    return render_template("auth.html", thisPage="Auth",cards=cards, navBarLinks=navBarLinks, error=error, version=version, size=size)
 
 @web.route("/wiki")
 async def wiki(): 
@@ -62,13 +60,6 @@ async def wiki():
 async def forum(): 
     cards = await getCards()
     return render_template("home.html", thisPage="Forum",cards=cards, navBarLinks=navBarLinks) 
-
-@web.route("/dev")
-async def dev():
-    temp = request.args.get("template", "home")
-    tempage = request.args.get("thisPage", "Home")
-    cards = await getCards()
-    return render_template(f"{temp}.html", thisPage=f"{tempage}",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/favicon.ico")
 async def favicon():
