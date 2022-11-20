@@ -4,6 +4,8 @@
 # Bootstrap sass and icons
 app/static/sass/bootstrap
 app/static/css/icons
+app/static/js/bootstrap.min.js
+app/static/js/popper.min.js
 
 # Compiled sass
 *.scss.css*

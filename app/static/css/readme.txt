@@ -1,4 +1,3 @@
 This file is here so that github doesn't  ignore this folder.
-The server will compile /static/sass/ contents into here.
-Bootstrap sass source code should be present in /static/sass/ during this process.
-It will be downloaded automatically if you're building the image using docker.
+When building the docker image, Bootstrap Icons will be downloaded into this folder.
+During runtime, the server places compiled sass in here as well.

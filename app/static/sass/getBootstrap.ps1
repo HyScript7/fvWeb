@@ -1,3 +1,7 @@
+Invoke-WebRequest -Method Get -Uri "https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js" -OutFile ".\popper.min.js"
+Invoke-WebRequest -Method Get -Uri "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" -OutFile ".\bootstrap.min.js"
+Move-Item ".\popper.min.js" "..\js\popper.min.js"
+Move-Item ".\bootstrap.min.js" "..\js\bootstrap.min.js"
 Invoke-WebRequest -Method Get -Uri "https://github.com/twbs/bootstrap/archive/v5.2.2.zip" -OutFile ".\v5.2.2.zip"
 Expand-Archive -LiteralPath .\v5.2.2.zip -DestinationPath .\
 New-Item -Path '.\bootstrap' -ItemType Directory
