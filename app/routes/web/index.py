@@ -44,12 +44,12 @@ async def auth():
 @web.route("/wiki")
 async def wiki(): 
     cards = await getCards()
-    return render_template("home.html", thisPage="Wiki",cards=cards, navBarLinks=navBarLinks) 
+    return render_template("wiki/index.html", thisPage="Wiki",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/forum")
 async def forum(): 
     cards = await getCards()
-    return render_template("home.html", thisPage="Forum",cards=cards, navBarLinks=navBarLinks) 
+    return render_template("forum/index.html", thisPage="Forum",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/favicon.ico")
 async def favicon():
