@@ -4,5 +4,6 @@
 ./venv/
 ./README.md
 ./.env
+./app/.env
 ./app/static/sass/bootstrap/
 ./app/static/css/icons/

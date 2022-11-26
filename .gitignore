@@ -1,6 +1,9 @@
 # obsidian
 .obsidian/
 
+# Debugging
+./cleanup.sh
+
 # Bootstrap sass and icons
 app/static/sass/bootstrap
 app/static/css/icons
@@ -80,3 +83,4 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.vercel

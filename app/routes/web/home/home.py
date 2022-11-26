@@ -11,22 +11,8 @@
 # For more information on copyright and licensing view the README.md file.
 #
 from flask import render_template, request, url_for
-from routes.web import web, db_Client
-
-async def getCards():
-    r = []
-    for i in db_Client["fvWeb"]["Activity"].find():
-        r.append([i["title"], i["description"], i["avatar"], "Relative Time"])
-    return r
-
-navBarLinks = [
-    ["Home", "/", False],
-    ["Wiki", "/wiki", False],
-    ["Forum", "/forum", False],
-    ["fvWorld", "#", True],
-    ["fvCards", "#", True]
-    # linkName, Href, Disabled
-]
+from routes.web import getCards, navBarLinks
+from routes.web.home import web
 
 @web.route("/")
 async def home(): 
@@ -40,16 +26,6 @@ async def auth():
     size = request.args.get("size", 2)
     cards = await getCards()
     return render_template("auth.html", thisPage="Auth",cards=cards, navBarLinks=navBarLinks, error=error, version=version, size=size)
-
-@web.route("/wiki")
-async def wiki(): 
-    cards = await getCards()
-    return render_template("wiki/index.html", thisPage="Wiki",cards=cards, navBarLinks=navBarLinks) 
-
-@web.route("/forum")
-async def forum(): 
-    cards = await getCards()
-    return render_template("forum/index.html", thisPage="Forum",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/favicon.ico")
 async def favicon():

@@ -19,7 +19,9 @@ from pymongo.errors import ServerSelectionTimeoutError
 from sassutils.wsgi import SassMiddleware
 from datetime import timedelta
 from routes.api import api
-from routes.web import web
+from routes.web.home import web as home
+from routes.web.wiki import web as wiki
+from routes.web.forum import web as forum
 
 # Database Env Variables
 dbhost = config("DB_HOST", "db")
@@ -44,7 +46,10 @@ app.permanent_session_lifetime = timedelta(minutes=int(config("FVWEB_SESSION_LIF
 
 # Register routes
 app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(web)
+app.register_blueprint(home)
+app.register_blueprint(wiki, url_prefix="/wiki")
+app.register_blueprint(forum, url_prefix="/forum")
+
 
 # Define Main Function
 async def main() -> None:

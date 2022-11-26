@@ -1,16 +1,3 @@
-#  ______   __   __   __     __     ______     ______    
-# /\  ___\ /\ \ / /  /\ \  _ \ \   /\  ___\   /\  == \   
-# \ \  __\ \ \ \'/   \ \ \/ ".\ \  \ \  __\   \ \  __<   
-#  \ \_\    \ \__|    \ \__/".~\_\  \ \_____\  \ \_____\ 
-#   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
-#
-# fvWeb
-# Version: 2.2
-# Author(s): HyScript7
-# License: MIT LICENSE
-# For more information on copyright and licensing view the README.md file.
-#
-from flask import Blueprint
 from decouple import config
 from pymongo import MongoClient
 
@@ -21,6 +8,15 @@ dbpass = config("DB_PASS", "root")
 
 db_Client = MongoClient(f"mongodb://{dbuser}:{dbpass}@{dbhost}:{dbport}",serverSelectionTimeoutMS=3000)
 
-web = Blueprint("web", __name__)
+async def getCards():
+    r = []
+    for i in db_Client["fvWeb"]["Activity"].find():
+        r.append([i["title"], i["description"], i["avatar"], "Relative Time"])
+    return r
 
-from routes.web import index
+navBarLinks = [
+    ["Home", "/", False],
+    ["Wiki", "/wiki", False],
+    ["Forum", "/forum", False]
+    # linkName, Href, Disabled
+]
