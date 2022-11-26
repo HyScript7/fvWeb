@@ -65,7 +65,7 @@ async def auth_register():
             return redirect("/auth?error=3", Response=Response("Username or Email already taken", status=400))
         UUID = uuid.uuid3(uuid.uuid1(), uuid.uuid4().hex).hex
         db_Client["fvWeb"]["Accounts"].insert_one({"uuid": UUID, "email": email, "username": username, "password": password, "avatar": avatar})
-        return redirect("/auth", Response=Response("Successfuly Registered", status=200))
+        return redirect("/auth", Response=Response("Successfully Registered", status=200))
 
 @api.route("/auth/login", methods=["POST"])
 async def auth_login():
