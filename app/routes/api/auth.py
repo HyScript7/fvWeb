@@ -52,6 +52,8 @@ async def auth_register():
         return redirect(redirect_url, Response=Response("Already logged in", status=400))
     except KeyError:
         email = request.form["email"]
+        if not email:
+            return redirect("/auth?error=1", Response=Response("You must specify an email address!", status=400))
         username = request.form["username"]
         password = hashlib.sha256(request.form["password"].encode("utf-8")).hexdigest()
         avatar = request.files["avatar"] # Avatar file
@@ -115,3 +117,11 @@ async def auth_check():
         return Response(str(sessionID), status=200)
     except KeyError:
         return Response("No Session", status=200)
+
+@api.route("/cookiesAccepted")
+async def cookies_accepted():
+    session["cookies"] = True
+    redirect_url = request.referrer
+    if request.referrer is None:
+        redirect_url = "/"
+    return redirect(redirect_url, Response=Response("Cookies accepted", status=200))

@@ -17,9 +17,10 @@ from routes.web.wiki import web
 @web.route("/")
 async def index(): 
     cards = await getCards()
-    return render_template("wiki/index.html", thisPage="Home",cards=cards, navBarLinks=navBarLinks) 
+    return render_template("wiki/index.html", thisPage="Wiki",cards=cards, navBarLinks=navBarLinks) 
 
 @web.route("/article/<id>")
 async def article(id):
     cards = await getCards()
-    return render_template("wiki/article.html", id=id, thisPage="Home",cards=cards, navBarLinks=navBarLinks) 
+    content = []
+    return render_template("wiki/article.html", id=id, thisPage="Wiki",cards=cards, navBarLinks=navBarLinks, content=content) 

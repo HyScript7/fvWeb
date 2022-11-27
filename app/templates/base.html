@@ -7,77 +7,91 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='/css/icons/bootstrap-icons.css') }}">
     </head>
     <body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<div class="container-fluid">
-				<img src="{{ url_for('static', filename='/img/logo.png') }}" alt="Fusionverse Logo" width="30" height="30" class="img-fluid d-inline-block">
-				<a class="navbar-brand" href="/">&nbspFusionverse</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						{% for link in navBarLinks %}
-						<li class="nav-item">
-							<a class="nav-link{{' disabled' if link[2]}}{{' active' if link[0] == thisPage}}" href="{{link[1]}}">{{link[0]}}</a>
-						</li>
-						{% endfor %}
-					</ul>
-				</div>
-				<!-- Begin Auth Dropdown -->
-				<div class="dropdown">
-					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-						{% if session["authSession"] %}
-							<img src="#" alt="Avatar"> {{ session["authSession"][1] }}
-						{% else %}
-							<i class="bi bi-key"></i>&nbspYou are not logged in
-						{% endif %}
+		<script>0</script> <!-- This for some reason prevents unstylised content from flashing on firefox -->
+		<header>
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<div class="container-fluid">
+					<img src="{{ url_for('static', filename='/img/logo.png') }}" alt="Fusionverse Logo" width="30" height="30" class="img-fluid d-inline-block">
+					<a class="navbar-brand" href="/">&nbspFusionverse</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
 					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						{% if session["authSession"] %}
-							<li><div><img src="#" alt="Avatar">{{ session["authSession"][1] }}</div></li>
-							<li><a class="dropdown-item" href="#">My Profile</a></li>
-							<li><a class="dropdown-item" href="#">Settings</a></li>
-							<li><a class="dropdown-item" href="/api/auth/logout">Logout</a></li>
-						{% else %}
-							<li><a class="dropdown-item" href="/auth">Login</a></li>
-							<li><a class="dropdown-item" href="/auth">Register</a></li>
-						{% endif %}
-					</ul>
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav">
+							{% for link in navBarLinks %}
+							<li class="nav-item">
+								<a class="nav-link{{' disabled' if link[2]}}{{' active' if link[0] == thisPage}}" href="{{link[1]}}">{{link[0]}}</a>
+							</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<!-- Begin Auth Dropdown -->
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							{% if session["authSession"] %}
+								<img src="#" alt="Avatar"> {{ session["authSession"][1] }}
+							{% else %}
+								<i class="bi bi-key"></i>&nbspYou are not logged in
+							{% endif %}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							{% if session["authSession"] %}
+								<li><div><img src="#" alt="Avatar">{{ session["authSession"][1] }}</div></li>
+								<li><a class="dropdown-item" href="#">My Profile</a></li>
+								<li><a class="dropdown-item" href="#">Settings</a></li>
+								<li><a class="dropdown-item" href="/api/auth/logout">Logout</a></li>
+							{% else %}
+								<li><a class="dropdown-item" href="/auth">Login</a></li>
+								<li><a class="dropdown-item" href="/auth">Register</a></li>
+							{% endif %}
+						</ul>
+					</div>
+					<!-- End Auth Dropdown -->
 				</div>
-				<!-- End Auth Dropdown -->
+			</nav>
+		</header>
+		<main>
+		{% block root %}
+		{% endblock %}
+		</main>
+		<footer>
+			<div class="bg-dark text-white position-sticky top-100 start-50 p-3">
+				<div class="card-body">
+				<div class="row">
+					<div class="col">
+						<h5 class="card-title">About</h5>
+						<p class="card-text">fvWeb is a web app written in Flask providing a Forum and Wiki for Fusionverse. To learn more, click one of the links below to see what interests you.</p>
+						<a href="/about" class="card-link link-secondary text-decoration-none"><i class="bi bi-card-text"></i>&nbspAbout</a><br>
+						<a href="/privavy" class="card-link link-secondary text-decoration-none"><i class="bi bi-fingerprint"></i>&nbspPrivacy Policy</a><br>
+						<a href="/terms" class="card-link link-secondary text-decoration-none"><i class="bi bi-list-columns-reverse"></i>&nbspTerms</a><br>
+						</div>
+						<div class="col">
+						<h5 class="card-title">Source Code</h5>
+						<p class="card-text">You can view the fvWeb and game source code on GitHub. The fvWeb project is open and you're free to fork it for your own creations.</p>
+						<a href="https://github.com/HyScript7/fvWeb" class="card-link link-secondary text-decoration-none"><i class="bi bi-github"></i>&nbspGitHub</a>
+						</div>
+						<div class="col">
+						<h5 class="card-title">Social</h5>
+						<p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
+						<a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none"><i class="bi bi-discord"></i>&nbspDiscord</a>
+						</div>
+					</div>
+				</div>
 			</div>
-		</nav>
-	</header>
-	<main>
-	{% block root %}
-	{% endblock %}
-	</main>
-	<footer>
-		<div class="bg-dark text-white position-sticky top-100 start-50 p-3">
-		    <div class="card-body">
-			<div class="row">
-			<div class="col">
-				<h5 class="card-title">About</h5>
-				<p class="card-text">fvWeb is a web app written in Flask providing a Forum and Wiki for Fusionverse. To learn more, click one of the links below to see what interests you.</p>
-				<a href="/about" class="card-link link-secondary text-decoration-none"><i class="bi bi-card-text"></i>&nbspAbout</a><br>
-				<a href="#" class="card-link link-secondary text-decoration-none">Placeholder Link</a>
-			    </div>
-			    <div class="col">
-				<h5 class="card-title">Source Code</h5>
-				<p class="card-text">You can view the fvWeb and game source code on GitHub. The fvWeb project is open and you're free to fork it for your own creations.</p>
-				<a href="https://github.com/HyScript7/fvWeb" class="card-link link-secondary text-decoration-none"><i class="bi bi-github"></i>&nbspGitHub</a>
-			    </div>
-			    <div class="col">
-				<h5 class="card-title">Social</h5>
-				<p class="card-text">Consider joining the Fusionverse discord server for more content and lore while we are working on the website!</p>
-				<a href="https://discord.gg/4rTXxzxJsM" class="card-link link-secondary text-decoration-none"><i class="bi bi-discord"></i>&nbspDiscord</a>
-			    </div>
-			</div>
-		    </div>
+		</footer>
+		{% if not session["cookies"] %}
+		<div class="cookie-consent container-fluid w-100 p-3 text-light bg-dark border border-5 border-success">
+			<p><strong>This website uses cookies</strong></p>
+			<p>Learn how cookies are used on this website by clicking the "Learn more" button below.</p>
+			<p></p>
+			<form>
+				<button class="btn btn-success" formaction="/api/cookiesAccepted">Accept</button>
+				<button class="btn btn-success" formaction="/privacy">Learn more</button>
+			</form>
 		</div>
-	</footer>
+		{% endif %}
         <script src="{{ url_for('static', filename='/js/popper.min.js') }}"></script>
         <script src="{{ url_for('static', filename='/js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='/js/jquery-3.6.1.min.js') }}"></script>
     </body>
 </html>

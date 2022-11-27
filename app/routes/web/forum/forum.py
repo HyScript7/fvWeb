@@ -17,4 +17,4 @@ from routes.web.forum import web
 @web.route("/")
 async def index(): 
     cards = await getCards()
-    return render_template("forum/index.html", thisPage="Home",cards=cards, navBarLinks=navBarLinks) 
+    return render_template("forum/index.html", thisPage="Forum",cards=cards, navBarLinks=navBarLinks) 

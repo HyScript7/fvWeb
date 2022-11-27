@@ -14,3 +14,5 @@ New-Item -Path '..\css\icons' -ItemType Directory
 Move-Item ".\bootstrap-icons-1.9.1\*" "..\css\icons"
 Remove-Item -r -Force ".\bootstrap-icons-1.9.1"
 Remove-Item ".\bootstrap-icons-1.9.1.zip"
+Invoke-WebRequest -Method Get -Uri "https://code.jquery.com/jquery-3.6.1.min.js" -OutFile ".\jquery-3.6.1.min.js"
+Move-Item ".\jquery-3.6.1.min.js" "..\js\"

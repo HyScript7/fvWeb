@@ -3,30 +3,35 @@
 <div class="container-fluid"> <!-- py-3 px-4 -->
 	<div class="row">
 		<!-- Navigation Sidebar -->
-		<div class="col-lg-2 bg-info">
+		<div class="col-lg-2">
 			<nav>
 				<br>
-				<div class="container-md text-center"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner"/></div>
+				<div class="text-center p-2"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner" width="100%"></div>
 				<br>
 				<ul class="list-group list-group-flush border-0 p-2 py-1">
-					<li class="list-group-item border-0">Item 1</li>
-					<li class="list-group-item border-0">Item 2</li>
-					<li class="list-group-item border-0">Item 3</li>
-					<li class="list-group-item border-0">Item 4</li>
-					<li class="list-group-item border-0">Item 5</li>
+					<li class="list-group-item text-bg-dark border-0">Option 1</li>
+					<li class="list-group-item text-bg-dark border-0">Option 2</li>
+					<li class="list-group-item text-bg-dark border-0">Option 3</li>
+					{% if session["authSession"] %}
+					<li class="list-group-item text-bg-dark border-0">My Account</li>
+					<li class="list-group-item text-bg-dark border-0">Settings</li>
+					{% else %}
+					<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth">Login</a></li>
+					<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth">Register</a></li>
+					{% endif %}
 				</ul>
 				<br>
-				<iframe src="https://discord.com/widget?id=1007658112297218181&theme=dark" width="100%" height="500px" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+				<iframe src="https://discord.com/widget?id=1007658112297218181&theme=dark" class="p-2" width="100%" height="500px" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
 			</nav>
 		</div>
 		<!-- Main Content -->
-		<div class="col-lg-8 bg-success">
+		<div class="col-lg-8 text-light">
 			{% block content %}
 			{% endblock %}
 			<br>
 		</div>
 		<!-- Activity Cards -->
-		<div class="col-lg-2 bg-danger">
+		<div class="col-lg-2">
 			<br>
 			{% for i in cards %}
 			<div class="card mb-3">

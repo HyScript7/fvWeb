@@ -5,7 +5,7 @@ COPY . .
 RUN ["pip", "install", "--upgrade", "pip"]
 RUN ["python", "-m", "pip", "install", "-r", "./requirements.txt"]
 WORKDIR /app/static/sass/
-RUN "./getBootstrap.sh"
+RUN "./getDependencies.sh"
 WORKDIR /app
 
 # Setup Env

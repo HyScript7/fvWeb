@@ -22,10 +22,9 @@ async def home():
 @web.route("/auth")
 async def auth():
     error = request.args.get("error", 0)
-    version = request.args.get("version", "none")
     size = request.args.get("size", 2)
     cards = await getCards()
-    return render_template("auth.html", thisPage="Auth",cards=cards, navBarLinks=navBarLinks, error=error, version=version, size=size)
+    return render_template("auth.html", thisPage="Auth",cards=cards, navBarLinks=navBarLinks, error=error, size=size)
 
 @web.route("/favicon.ico")
 async def favicon():

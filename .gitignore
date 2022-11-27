@@ -4,11 +4,12 @@
 # Debugging
 ./cleanup.sh
 
-# Bootstrap sass and icons
+# JS, CSS Dependencies
 app/static/sass/bootstrap
 app/static/css/icons
 app/static/js/bootstrap.min.js
 app/static/js/popper.min.js
+app/static/js/jquery-3.6.1.min.js
 
 # Compiled sass
 *.scss.css*
