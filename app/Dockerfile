@@ -22,4 +22,4 @@ ENV FVWEB_SESSION_SECRET=S3CR37_CH4NG3_M3
 EXPOSE ${FLASK_PORT}
 
 # Run the application
-CMD ["python3", "./app.py"]
+CMD ["python3", "./main.py"]
