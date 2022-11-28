@@ -5,8 +5,6 @@
 #   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
 #
 # fvWeb
-# Version: 2.2
-# Author(s): HyScript7
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #

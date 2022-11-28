@@ -1,2 +1,2 @@
 This file is here so that github doesn't  ignore this folder.
-When building the docker image, Bootstrap JS and Popper will be downloaded into this folder.
+If you need the files for development or execution purposes, run the getDependencies script in /app/static/sass.
