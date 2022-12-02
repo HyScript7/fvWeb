@@ -79,7 +79,7 @@
 				</div>
 			</div>
 		</footer>
-		{% if not session["cookies"] %}
+		{% if not request.cookies.get('cookies') %}
 		<div class="cookie-consent container-fluid w-100 p-3 text-light bg-dark border border-5 border-success">
 			<p><strong>This website uses cookies</strong></p>
 			<p>Learn how cookies are used on this website by clicking the "Learn more" button below.</p>

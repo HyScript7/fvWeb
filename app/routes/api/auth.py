@@ -12,7 +12,7 @@ import uuid
 import hashlib
 import base64
 from routes.api import api, db_Client
-from flask import session, request, redirect
+from flask import session, request, redirect, make_response
 from flask.wrappers import Response
 
 #TODO: Might be a good idea to store this in the database instead - Will be easier to implement with an Admin interface on the web it self later.
@@ -118,8 +118,9 @@ async def auth_check():
 
 @api.route("/cookiesAccepted")
 async def cookies_accepted():
-    session["cookies"] = True
     redirect_url = request.referrer
     if request.referrer is None:
         redirect_url = "/"
-    return redirect(redirect_url, Response=Response("Cookies accepted", status=200))
+    resp = make_response(redirect(redirect_url, Response=Response("Cookies accepted", status=200)))
+    resp.set_cookie('cookies', "True")
+    return resp
