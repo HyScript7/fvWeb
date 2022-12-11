@@ -1,4 +1,47 @@
 {% extends "index.html" %}
 {% block content %}
-<h1>fvWiki - Article {{id}}</h1>
+<!-- fvWiki - Article ID {{id}} -->
+<br>
+<div class="container-fluid">
+    <div class="float-lg-start w-50">
+        <div class="table-responsive mx-2 border border-2 border-dark bg-noise">
+            <table class="table border-dark broder-0 text-light">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <h2>Table of Content</h2>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for i in range(1,2) %}
+                        <tr>
+                            <td scope="row">
+                                <a class="text-decoration-none link-success" href="#Title{{i}}"><div>Title {{i}}</div></a>
+                                <ol>
+                                    <a class="text-decoration-none link-success" href="#SubTitle1"><li><div>Sub Title 1</div></li></a>
+                                    <a class="text-decoration-none link-success" href="#SubTitle2"><li><div>Sub Title 2</div></li></a>
+                                    <ol>
+                                        <a class="text-decoration-none link-success" href="#SubSubTitle1"><li><div>Sub Sub Title 1</div></li></a>
+                                        <a class="text-decoration-none link-success" href="#SubSubTitle2"><li><div>Sub Sub Title 2</div></li></a>
+                                        
+                                    </ol>
+                                </ol>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <h1>Title</h1>
+        <p>
+            {% for i in range(6) %}
+            <h2 id="Title{{i+1}}">Title {{i+1}}</h2>
+            <p>{{lorem[i]}}</p>
+            {% endfor %}
+        </p>
+    </div>
+</div>
 {% endblock %}

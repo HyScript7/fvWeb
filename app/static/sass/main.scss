@@ -1,6 +1,11 @@
 @import "./bootstrap/scss/functions";
 @import "./bootstrap/scss/variables";
 
+.bg-noise {
+    background-color: rgba($color: $dark, $alpha: 0.5);
+    background-image: url("/static/img/noise.png");
+}
+
 body {
     background-image: url("/static/img/background.png");
     background-size: cover;
