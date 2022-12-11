@@ -11,6 +11,7 @@
 import uuid
 import hashlib
 import base64
+import time
 from routes.api import api, db_Client
 from flask import session, request, redirect, make_response
 from flask.wrappers import Response
@@ -122,5 +123,5 @@ async def cookies_accepted():
     if request.referrer is None:
         redirect_url = "/"
     resp = make_response(redirect(redirect_url, Response=Response("Cookies accepted", status=200)))
-    resp.set_cookie('cookies', "True")
+    resp.set_cookie('cookies', "True", expires=time.time()+2628000)
     return resp
