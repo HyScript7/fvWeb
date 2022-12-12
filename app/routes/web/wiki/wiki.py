@@ -13,6 +13,73 @@ from routes.web import getCards, navBarLinks
 from routes.web.wiki import web
 
 
+async def getArticle(id):
+    return {
+        "title": "Article Title",
+        "description": "Article Description",
+        "tags": ["Category 1", "Category 2"],
+        "author": "Some-UUID",
+        "created": 1670702154,
+        "edited": 1670788550,
+        "content": [
+            "# Title",
+            "Hello! This is the totally loaded from database and not hardcoded article content used for testing.",
+            "## Sub Title 1",
+            "This is some text under the first sub title",
+            "### Sub Sub Title 1",
+            "Here is some more text under a sub sub title",
+            "### Sub Sub Title 2",
+            "Here is some markdown text and an HTML link",
+            "<a href='/' class='link-secondary text-decoration-none'>This link leads to Home</a>",
+            "## Sub Title 2",
+            "### Sub Sub Title 1",
+            "I don't know what to write anymore...",
+            "### Sub Sub Title 2",
+            "<hr>",
+            "This is the last sentence."
+        ],
+    }
+
+class contentTable:
+    def __init__(self, content: list):
+        self.table = self.parse(content)
+        self.simple = self.simpleParse(self.table)
+        pass
+    def parse(self, content: list) -> dict:
+        titles = {}
+        path = []
+        # eg:. ["# Title 1", "## Sub Title 1", "### Sub Sub Title 1"]
+        for i in content:
+            if not (i.startswith("#") and i.replace("#", "").startswith(" ")):
+                continue
+            # Modify path if necessary
+            level = i.split(" ")[0].count("#")
+            indentLevel = len(path)
+            if indentLevel >= level:
+                path = path[0 : level - 1]
+                path.append(i)
+            elif indentLevel < level:
+                path.append(i)
+            # Add path to corresponding title
+            current = titles
+            lp = path[0 : len(path) - 1]
+            for y in lp:
+                current = current[y]
+            current[i] = {}
+        return titles
+    def simpleParse(self, table):
+        """
+        TODO: Make sure the first element in the list (i) is the prefix (Eg: 1.1.1 or 1.2.2 or 2.1.1)
+        TODO: All the necessary changes should be done within this function, as we already have all the information we need from the parse function in the table dict. All that has to be done is keeping track.
+        """
+        # This function makes my life easier looping through the thing in the template
+        titles = []
+        for i, n in enumerate(table):
+            titles.append([i, n])
+            if len(table[n]):
+                titles += self.simpleParse(table[n])
+        return titles
+
 @web.route("/")
 async def index():
     cards = await getCards()
@@ -24,21 +91,13 @@ async def index():
 @web.route("/article/<id>")
 async def article(id):
     cards = await getCards()
-    content = []
-    lorem = [
-        "Dolorem sed ut ipsum neque quisquam quiquia. Est sit sed modi non labore. Magnam quisquam consectetur neque. Ut modi amet adipisci est. Porro eius velit sit. Numquam dolore adipisci aliquam velit. Numquam dolorem tempora magnam sed. Adipisci neque numquam amet quisquam non magnam. Consectetur sit ut tempora sit. Quaerat tempora amet quisquam.",
-        "Modi labore dolorem dolor consectetur non. Modi etincidunt dolor quaerat. Magnam quaerat quisquam non quiquia magnam aliquam velit. Numquam quiquia tempora adipisci consectetur. Non amet quisquam est consectetur tempora. Sit sed dolore ipsum. Labore voluptatem quaerat quiquia sed sed.",
-        "Aliquam eius quaerat consectetur dolore dolor sed. Magnam numquam est neque dolorem numquam dolore. Etincidunt amet ipsum etincidunt voluptatem. Eius dolore voluptatem modi amet. Amet tempora ut dolor neque eius. Quiquia consectetur dolore labore sed labore quaerat.",
-        "Labore etincidunt dolore numquam labore dolorem quisquam aliquam. Amet etincidunt porro non. Sed labore consectetur numquam dolorem labore eius numquam. Quiquia sit quisquam magnam sit ipsum tempora. Quaerat quaerat quaerat sit. Dolorem adipisci adipisci quiquia magnam. Dolor voluptatem consectetur neque dolore. Porro labore adipisci sit ut neque dolore.",
-        "Sit quaerat adipisci tempora quaerat sit modi sed. Ut neque tempora magnam dolore aliquam quisquam sit. Magnam est neque velit ipsum eius aliquam quaerat. Etincidunt ipsum sed est amet est. Etincidunt labore quisquam adipisci voluptatem porro. Dolor tempora quaerat dolorem quaerat ipsum modi modi. Ipsum consectetur etincidunt labore adipisci neque quiquia tempora. Labore quisquam velit sed amet aliquam dolore sit. Quaerat dolor eius eius velit neque voluptatem tempora.",
-        "Dolore quiquia quisquam aliquam quaerat quisquam eius. Ipsum velit non numquam ipsum adipisci. Numquam quiquia dolore adipisci. Dolor est dolorem sed porro tempora dolorem aliquam. Magnam quaerat aliquam dolore voluptatem. Velit non dolore quaerat sed. Aliquam etincidunt numquam adipisci tempora quisquam amet dolorem. Est quaerat quisquam eius neque neque magnam consectetur. Ut voluptatem dolore tempora dolor. Consectetur neque non dolore consectetur neque.",
-    ]
+    content = await getArticle(id)
+    content = content["content"]
     return render_template(
         "wiki/article.html",
         id=id,
         thisPage="Wiki",
         cards=cards,
         navBarLinks=navBarLinks,
-        content=content,
-        lorem=lorem,
+        content=[contentTable(content).simple, content],
     )
