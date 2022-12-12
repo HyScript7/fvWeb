@@ -34,7 +34,7 @@
 								<i class="bi bi-key"></i>&nbspYou are not logged in
 							{% endif %}
 						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						<ul class="dropdown-menu dropdown-menu-dark w-100" aria-labelledby="dropdownMenuButton1"> 
 							{% if session["authSession"] %}
 								<li><div><img src="#" alt="Avatar">{{ session["authSession"][1] }}</div></li>
 								<li><a class="dropdown-item" href="#">My Profile</a></li>
