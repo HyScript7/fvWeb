@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="float-lg-start w-50">
         <div class="table-responsive mx-2 border border-2 border-dark bg-noise">
-            <table class="table border-dark broder-0 text-light">
+            <table class="table border-dark border-0 text-light">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -17,18 +17,10 @@
                         {% for i in content[0] %}
                         <tr>
                             <td scope="row">
-                                <a class="text-decoration-none link-success" href="#Title{{i[0]}}"><div>{{i[0]}}. {{i[1].strip("#")}}</div></a>
-                                <!--
-                                <ol>
-                                    {% for y in range(1,3) %}
-                                    <a class="text-decoration-none link-success" href="#SubTitle{{i}}.{{y}}"><li><div>Sub Title {{y}}</div></li></a>
-                                    <ol>
-                                        <a class="text-decoration-none link-success" href="#SubSubTitle{{i}}.{{y}}.1"><li><div>Sub Sub Title 1</div></li></a>
-                                        <a class="text-decoration-none link-success" href="#SubSubTitle{{i}}.{{y}}.2"><li><div>Sub Sub Title 2</div></li></a>
-                                    </ol>
-                                    {% endfor %}
-                                </ol>
-                                -->
+                                <a class="text-decoration-none link-success" href="#Title{{i[0]}}"><div>{{i[1].strip("#")}}</div></a>
+                            </td>
+                            <td scope="row">
+                                {{i[0]}}
                             </td>
                         </tr>
                         {% endfor %}
@@ -51,3 +43,4 @@
     </article>
 </div>
 {% endblock %}
+

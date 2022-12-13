@@ -71,7 +71,7 @@ class contentTable:
         # This function makes my life easier looping through the thing in the template
         titles = []
         for i, n in enumerate(table):
-            p = f"{prefix}{i}"
+            p = f"{prefix}{i+1}"
             titles.append([p, n, n.replace("#", "").replace(" ", "", 1)])
             if len(table[n]):
                 titles += self.simpleParse(table[n], prefix=(p+"."))
