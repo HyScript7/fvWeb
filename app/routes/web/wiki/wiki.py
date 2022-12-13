@@ -67,18 +67,16 @@ class contentTable:
                 current = current[y]
             current[i] = {}
         return titles
-    def simpleParse(self, table):
-        """
-        TODO: Make sure the first element in the list (i) is the prefix (Eg: 1.1.1 or 1.2.2 or 2.1.1)
-        TODO: All the necessary changes should be done within this function, as we already have all the information we need from the parse function in the table dict. All that has to be done is keeping track.
-        """
+    def simpleParse(self, table, prefix=""):
         # This function makes my life easier looping through the thing in the template
         titles = []
         for i, n in enumerate(table):
-            titles.append([i, n])
+            p = f"{prefix}{i}"
+            titles.append([p, n, n.replace("#", "").replace(" ", "", 1)])
             if len(table[n]):
-                titles += self.simpleParse(table[n])
+                titles += self.simpleParse(table[n], prefix=(p+"."))
         return titles
+
 
 @web.route("/")
 async def index():
