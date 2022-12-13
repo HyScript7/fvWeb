@@ -8,7 +8,7 @@
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, send_file
 from routes.web import getCards, navBarLinks
 from routes.web.home import web
 
@@ -38,4 +38,5 @@ async def auth():
 
 @web.route("/favicon.ico")
 async def favicon():
-    return url_for("static", filename="/img/logo.png")
+    return send_file("./static/img/favicon.ico")
+
