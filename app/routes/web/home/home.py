@@ -24,19 +24,24 @@ async def home():
 @web.route("/auth")
 async def auth():
     error = request.args.get("error", 0)
-    size = request.args.get("size", 2)
     cards = await getCards()
+    authtype = (
+        "register"
+        if not request.args.get("register", True)
+        else "login"
+        if not request.args.get("login", True)
+        else "selection"
+    )
     return render_template(
         "auth.html",
         thisPage="Auth",
         cards=cards,
         navBarLinks=navBarLinks,
         error=error,
-        size=size,
+        authtype=authtype,
     )
 
 
 @web.route("/favicon.ico")
 async def favicon():
     return send_file("./static/img/favicon.ico")
-

@@ -36,15 +36,17 @@ async def getArticle(id):
             "I don't know what to write anymore...",
             "### Sub Sub Title 2",
             "<hr>",
-            "This is the last sentence."
+            "This is the last sentence.",
         ],
     }
+
 
 class contentTable:
     def __init__(self, content: list):
         self.table = self.parse(content)
         self.simple = self.simpleParse(self.table)
         pass
+
     def parse(self, content: list) -> dict:
         titles = {}
         path = []
@@ -67,6 +69,7 @@ class contentTable:
                 current = current[y]
             current[i] = {}
         return titles
+
     def simpleParse(self, table, prefix=""):
         # This function makes my life easier looping through the thing in the template
         titles = []
@@ -74,7 +77,7 @@ class contentTable:
             p = f"{prefix}{i+1}"
             titles.append([p, n, n.replace("#", "").replace(" ", "", 1)])
             if len(table[n]):
-                titles += self.simpleParse(table[n], prefix=(p+"."))
+                titles += self.simpleParse(table[n], prefix=(p + "."))
         return titles
 
 
@@ -98,4 +101,19 @@ async def article(id):
         cards=cards,
         navBarLinks=navBarLinks,
         content=[contentTable(content).simple, content],
+    )
+
+
+@web.route("/editor/<id>")
+async def editor(id):
+    cards = await getCards()
+    content = await getArticle(id)
+    content = content["content"]
+    return render_template(
+        "wiki/editor.html",
+        id=id,
+        thisPage="Wiki",
+        cards=cards,
+        navBarLinks=navBarLinks,
+        content=content,
     )

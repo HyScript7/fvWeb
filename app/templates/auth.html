@@ -1,79 +1,83 @@
-{% extends "index.html" %}
-{% block content %}
-
-<!-- Begin Alerts -->
-<br>
-{% if error|int==1 %}
-<div class="alert alert-warning d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspYou must specify an email address!</div></div>
-{% elif error|int==2 %}
-<div class="alert alert-danger d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspThe username or password are incorrect!</div></div>
-{% elif error|int==3 %}
-<div class="alert alert-danger d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspThe username and/or email have already been registered!</div></div>
+{% extends "base.html" %}
+{% block body %}
+{% if not authtype=="selection" %}
+<a href="?" class="link-success">Go back</a>
 {% endif %}
-<!-- End Alerts -->
+<main>
+    <div class="container text-light mx-auto my-5 justify-content-center">
+        {% if error|int==1 %}
+            <div class="alert alert-warning d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspYou must specify an email address!</div></div>
+        {% elif error|int==2 %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspThe username or password are incorrect!</div></div>
+        {% elif error|int==3 %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspThe username and/or email have already been registered!</div></div>
+        {% endif %}
 
-<h1>fvWeb Authenticaton</h1>
-
-<!-- Begin Size Select -->
-{% set size = size|int * 25 %}
-<div class="card text-bg-dark w-{{size}}">
-    <div class="card-header">
-        Card Size Selector
-    </div>
-    <div class="card-body">
-        <form id="sizeForm">
-            <div class="input-group mb-3">
-                ({{(size/25)|int}}) Card Size: 
-                <input type="range" class="form-range form-control border-0 p-2" min="1" max="4" name="size" id="cardSizeRange" value="{{size/25}}">
+        {% if authtype=="login" %}
+            <div class="card text-bg-dark">
+                <div class="card-header">
+                    Login
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Login</h5>
+                    <p class="card-text">{{ 'Logged in as ' + session['authSession'][1] if session['authSession'] else 'Logged out' }}</p>
+                    <form id="fvAuth_LoginForm">
+                        <div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div>
+                        <div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div>
+                        <div class="w-100 py-1 px-2">
+                            <button type="submit" formmethod="POST" formaction="/api/auth/login" class="btn btn-primary w-100">Login</button>
+                        </div>
+                        <div class="w-100 py-1 px-2">
+                            <button type="submit" formmethod="POST" formaction="/api/auth/logout" class="btn btn-secondary w-100">Logout</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="input-group mb-3">
-                <button type="submit" formmethod="GET" class="btn btn-warning">Reload with new Settings</button>
+        {% elif authtype=="register" %}
+            <div class="card text-bg-dark">
+                <div class="card-header">
+                    Register
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Register</h5>
+                    <form id="fvAuth_LoginForm" enctype="multipart/form-data">
+                        <div class="mb-3"><input type="email" class="form-control" name="email" id="fvAuth_Email" placeholder="Email"></div>
+                        <div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div>
+                        <div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div>
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" name="avatar" id="fvAuth_Avatar">
+                            <label class="input-group-text" for="fvAuth_Avatar">Avatar</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="1" id="fvAuth_TOS">
+                          <label class="form-check-label" for="fvAuth_TOS">
+                            I have read and accept the <a href="/terms" class="link-success">Terms of Service</a>
+                          </label>
+                        </div>
+                        <p>
+                            Read the <a href="/privacy" class="link-success">Privacy Policy</a> for more information on what data we keep on you and how cookies are used.
+                        </p>
+                        <div class="w-100 py-1 pt-2 px-2">
+                            <button type="submit" formmethod="POST" formaction="/api/auth/register" class="btn btn-success w-100">Register</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
-    </div>
-</div>
-<!-- End Size Select-->
-
-<br>
-
-<!-- Begin Login Card -->
-<div class="card text-bg-dark w-{{size}}">
-    <div class="card-header">
-        Login
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Login</h5>
-        <p class="card-text">{{ 'Logged in as ' + session['authSession'][1] if session['authSession'] else 'Logged out' }}</p>
-        <form id="fvAuth_LoginForm">
-            <div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div>
-            <div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div>
-            <button type="submit" formmethod="POST" formaction="/api/auth/login" class="btn btn-primary">Login</button>
-            <button type="submit" formmethod="POST" formaction="/api/auth/logout" class="btn btn-secondary">Logout</button>
-        </form>
-    </div>
-</div>
-<!-- End Login Card -->
-
-<br>
-
-<!-- Begin Register Card -->
-<div class="card text-bg-dark w-{{size}}">
-    <div class="card-header">
-        Register
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Register</h5>
-        <form id="fvAuth_LoginForm" enctype="multipart/form-data">
-            <div class="mb-3"><input type="email" class="form-control" name="email" id="fvAuth_Email" placeholder="Email"></div>
-            <div class="mb-3"><input type="text" class="form-control" name="username" id="fvAuth_Username" placeholder="Username"></div>
-            <div class="mb-3"><input type="password" class="form-control" name="password" id="fvAuth_Password" placeholder="Password"></div>
-            <div class="input-group mb-3">
-                <input type="file" class="form-control" name="avatar" id="fvAuth_Avatar">
-                <label class="input-group-text" for="fvAuth_Avatar">Avatar</label>
+        {% else %}
+            <div class="card text-bg-dark">
+                <div class="card-header">
+                    Authentication
+                </div>
+                <div class="card-body">
+                    <div class="w-100 py-1 px-2">
+                        <a href="?login" class="btn btn-success w-100">Login</a>
+                    </div>
+                    <div class="w-100 py-1 px-2">
+                        <a href="?register" class="btn btn-success w-100">Register</a>
+                    </div>
+                </div>
             </div>
-            <button type="submit" formmethod="POST" formaction="/api/auth/register" class="btn btn-success">Register</button>
-        </form>
+        {% endif %}
     </div>
-</div>
-
+</main>
 {% endblock %}
