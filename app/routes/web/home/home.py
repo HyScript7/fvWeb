@@ -8,7 +8,7 @@
 # License: MIT LICENSE
 # For more information on copyright and licensing view the README.md file.
 #
-from flask import render_template, request, url_for, send_file
+from flask import render_template, request, url_for, send_file, session, redirect, Response
 from routes.web import getCards, navBarLinks
 from routes.web.home import web
 
@@ -40,6 +40,24 @@ async def auth():
         error=error,
         authtype=authtype,
     )
+
+
+@web.route('/profile/<user>')
+def profile(user=None):
+    if user is None:
+        try:
+            user = session["authSession"][0]
+        except:
+           return redirect("/auth?login", Response=Response("Cannot display a blank profile, prompting login", status=400))
+    #TODO: Verify the the profile exists
+    #TODO: Get profile data from DB
+    # Return content
+    return render_template('home/profile.html', userid=user)
+
+
+@web.route('/settings')
+def settings():
+    return render_template('home/settings.html')
 
 
 @web.route("/favicon.ico")

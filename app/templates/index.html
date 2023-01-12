@@ -15,11 +15,11 @@
 						<li class="list-group-item text-bg-dark border-0">Option 2</li>
 						<li class="list-group-item text-bg-dark border-0">Option 3</li>
 						{% if session["authSession"] %}
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="#">My Account</a></li>
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="#">Settings</a></li>
+						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/profile">My Account</a></li>
+						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/settings">Settings</a></li>
 						{% else %}
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth">Login</a></li>
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth">Register</a></li>
+						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth?login">Login</a></li>
+						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth?register">Register</a></li>
 						{% endif %}
 					</ul>
 					<br>

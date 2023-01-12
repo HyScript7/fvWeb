@@ -1,4 +1,8 @@
 {% extends "index.html" %}
 {% block content %}
+{% if userid == session["authSession"][0] %}
 <h1>Welcome to your profile!</h1>
+{% else %}
+<h1>Welcome to {{userid}}'s profile!</h1>
+{% endif %}
 {% endblock %}

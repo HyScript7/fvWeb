@@ -64,7 +64,7 @@ async def auth_register():
         email = request.form["email"]
         if not email:
             return redirect(
-                "/auth?error=1",
+                "/auth?register&error=1",
                 Response=Response("You must specify an email address!", status=400),
             )
         username = request.form["username"]
@@ -78,7 +78,7 @@ async def auth_register():
         # Check if the username or email are taken.
         if await isTaken(username, email):
             return redirect(
-                "/auth?error=3",
+                "/auth?register?error=3",
                 Response=Response("Username or Email already taken", status=400),
             )
         UUID = uuid.uuid3(uuid.uuid1(), uuid.uuid4().hex).hex
@@ -92,7 +92,7 @@ async def auth_register():
             }
         )
         return redirect(
-            "/auth", Response=Response("Successfully Registered", status=200)
+            "/auth?login", Response=Response("Successfully Registered", status=200)
         )
 
 
@@ -113,12 +113,12 @@ async def auth_login():
         password = hashlib.sha256(request.form["password"].encode("utf-8")).hexdigest()
         if not await isTaken(username):
             return redirect(
-                "/auth?error=2", Response=Response("Invalid Username", status=400)
+                "/auth?login?error=2", Response=Response("Invalid Username", status=400)
             )
         uuid = await getUUID(username)
         if not await checkPassword(uuid, password):
             return redirect(
-                "/auth?error=2", Response=Response("Invalid Username", status=400)
+                "/auth?login?error=2", Response=Response("Invalid Username", status=400)
             )
         # Set Session
         session["authSession"] = [uuid, username]
@@ -139,13 +139,13 @@ async def auth_logout():
         redirect_url = request.referrer
         if request.referrer is None:
             redirect_url = "/"
-        redirect_url.replace("error", "errorprev")
+        redirect_url.replace("error", "expired_error")
         return redirect(redirect_url, Response=Response("Logged out", status=200))
     except KeyError:
         redirect_url = request.referrer
         if request.referrer is None:
             redirect_url = "/"
-        redirect_url.replace("error", "errorprev")
+        redirect_url.replace("error", "expired_error")
         return redirect(redirect_url, Response=Response("No Session", status=200))
 
 
