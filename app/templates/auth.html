@@ -8,7 +8,7 @@
 <main>
     <div class="container text-light mx-auto my-5 justify-content-center">
         {% if error|int==1 %}
-            <div class="alert alert-warning d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspYou must specify an email address!</div></div>
+            <div class="alert alert-warning d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspYou must specify an email address, username and password!</div></div>
         {% elif error|int==2 %}
             <div class="alert alert-danger d-flex align-items-center" role="alert"><i class="bi bi-exclamation-triangle"></i><div>&nbspThe username or password are incorrect!</div></div>
         {% elif error|int==3 %}

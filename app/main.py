@@ -62,7 +62,7 @@ async def main() -> None:
             print(f"[{i+1}/5] MongoDB connection verified")
         except ServerSelectionTimeoutError:
             print(f"[{i+1}/5] MongoDB connection timed out")
-            if i == 2:
+            if i == 4:
                 print("Quitting: Application isn't in debug mode, but the database cannot be contacted!")
                 return
     serve(app, host="0.0.0.0", port=FLASK_PORT)
