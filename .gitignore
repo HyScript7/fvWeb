@@ -3,6 +3,7 @@
 
 # Debugging
 ./cleanup.sh
+_ignore_*
 
 # JS, CSS Dependencies
 app/static/sass/bootstrap
