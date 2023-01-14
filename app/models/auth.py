@@ -56,7 +56,7 @@ class User:
             avatar = defaultavatar
         else:
             avatar = "data:image/png;base64," + base64.b64encode(avatar).decode()
-        cls = cls(random_uuid(), username, email, password, avatar)
+        cls = cls(random_uuid(), username, password, email, avatar)
         cls.push()
         return cls
 

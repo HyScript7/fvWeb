@@ -111,14 +111,14 @@ async def auth_register():
     password = hashlib.sha256(request.form["password"].encode("utf-8")).hexdigest()
     avatar_data = request.files["avatar"].stream.read()  # Avatar file
     if not len(avatar_data):
-        avatar = None
+        avatar_data = None
     # Check if the username or email are taken.
     if await is_taken(username, email):
         return redirect(
             "/auth?register&error=3",
             Response=Response("Username or Email taken", status=400),
         )
-    models.User.new(username, email, password, avatar)
+    models.User.new(username, email, password, avatar_data)
     return redirect("/auth?login", Response=Response("Registered", status=200))
 
 
