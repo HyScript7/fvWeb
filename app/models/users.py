@@ -1,2 +1,1 @@
-from . import Redis, Database
-from . import Users as DB
+from . import Database
