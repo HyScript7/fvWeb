@@ -5,7 +5,7 @@
 app/static/js/bootstrap.min.js
 app/static/js/jquery-3.6.1.min.js
 app/static/js/popper.min.js
-app/static/css/*
+app/static/css/icons/
 app/static/sass/bootstrap/
 
 # Byte-compiled / optimized / DLL files
