@@ -1,15 +1,11 @@
-#  ______   __   __   __     __     ______     ______    
-# /\  ___\ /\ \ / /  /\ \  _ \ \   /\  ___\   /\  == \   
-# \ \  __\ \ \ \'/   \ \ \/ ".\ \  \ \  __\   \ \  __<   
-#  \ \_\    \ \__|    \ \__/".~\_\  \ \_____\  \ \_____\ 
-#   \/_/     \/_/      \/_/   \/_/   \/_____/   \/_____/ 
-#
-# fvWeb
-# License: MIT LICENSE
-# For more information on copyright and licensing view the README.md file.
-#
-from flask import Blueprint
+from common.route_vars import css, js, navbar
+from flask import Blueprint, render_template
 
 web = Blueprint("wiki", __name__)
 
-from routes.web.wiki import wiki
+
+@web.route("/")
+async def root():
+    return render_template(
+        "wiki/index.html", page="Wiki", title="Wiki", css=css, js=js, navbar=navbar
+    )

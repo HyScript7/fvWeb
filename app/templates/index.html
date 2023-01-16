@@ -1,62 +1,19 @@
-{% extends "base.html" %}
-{% block body %}
-{% include "components/navbar.html" %}
-<main>
-	<div class="container-fluid">
-		<div class="row">
-			<!-- Navigation Sidebar -->
-			<div class="col-lg-2">
-				<nav>
-					<br>
-					<div class="text-center p-2"><img class="img-fluid" src="{{ url_for('static', filename='/img/title.png') }}" alt="Fusionverse Banner" width="100%"></div>
-					<br>
-					<ul class="list-group list-group-flush border-0 p-2 py-1">
-						<li class="list-group-item text-bg-dark border-0">Option 1</li>
-						<li class="list-group-item text-bg-dark border-0">Option 2</li>
-						<li class="list-group-item text-bg-dark border-0">Option 3</li>
-						{% if session["authSession"] %}
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/profile">My Account</a></li>
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/settings">Settings</a></li>
-						{% else %}
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth?login">Login</a></li>
-						<li class="list-group-item text-bg-dark border-0"><a class="stretched-link text-light text-decoration-none" href="/auth?register">Register</a></li>
-						{% endif %}
-					</ul>
-					<br>
-					<iframe src="https://discord.com/widget?id=1007658112297218181&theme=dark" class="p-2" width="100%" height="500px" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-				</nav>
-			</div>
-			<!-- Main Content -->
-			<div class="col-lg-8 text-light">
-				{% block content %}
-				{% endblock %}
-				<br>
-			</div>
-			<!-- Activity Cards -->
-			<div class="col-lg-2">
-				<br>
-				{% for i in cards %}
-				<div class="card mb-3">
-					<div class="row g-0">
-						<div class="col-md-4 p-1">
-							<img src="{{i[2]}}" class="img-fluid rounded-2 border border-1 border-dark" alt="User Avatar">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body p-0 px-1">
-							<div class="py-1"></div>
-							<h5 class="card-title">{{i[0]}}</h5>
-							<p class="card-text">{{i[1]}}</p>
-							<p class="float-end p-0 card-text"><small class="text-muted">{{i[3]}}</small></p>
-							</div>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-		<!-- End Row -->
-		</div>
-		<!-- End Container -->
-	</div>
-</main>
-{% include "components/footer.html" %}
-{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Fusionverse{{(" - " + title) if title else ''}}</title>
+    {% for url in css %}
+    <link rel="stylesheet" href="{{url}}" />
+    {% endfor %}
+  </head>
+  <body>
+    <script>0</script>
+    {% block content %} {% endblock %}
+    <p>You are conneted to {{hostname}}</p>
+    {% for url in js %}
+    <script src="{{url}}"></script>
+    {% endfor %}
+  </body>
+</html>

@@ -1,42 +1,67 @@
-<header>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-			<img src="{{ url_for('static', filename='/img/logo.png') }}" alt="Fusionverse Logo" width="30" height="30" class="img-fluid d-inline-block">
-			<a class="navbar-brand" href="/">&nbspFusionverse</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					{% for link in navBarLinks %}
-					<li class="nav-item">
-						<a class="nav-link{{' disabled' if link[2]}}{{' active' if link[0] == thisPage}}" href="{{link[1]}}">{{link[0]}}</a>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-			<!-- Begin Auth Dropdown -->
-			<div class="dropdown">
-				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-					{% if session["authSession"] %}
-						<img src="#" alt="Avatar"> {{ session["authSession"][1] }}
-					{% else %}
-						<i class="bi bi-key"></i>&nbspYou are not logged in
-					{% endif %}
-				</button>
-				<ul class="dropdown-menu dropdown-menu-dark w-100 dropdown-menu-end" aria-labelledby="dropdownMenuButton1"> 
-					{% if session["authSession"] %}
-						<li><div><img src="#" alt="Avatar">{{ session["authSession"][1] }}</div></li>
-						<li><a class="dropdown-item" href="#">My Profile</a></li>
-						<li><a class="dropdown-item" href="#">Settings</a></li>
-						<li><a class="dropdown-item" href="/api/auth/logout">Logout</a></li>
-					{% else %}
-						<li><a class="dropdown-item" href="/auth">Login</a></li>
-						<li><a class="dropdown-item" href="/auth">Register</a></li>
-					{% endif %}
-				</ul>
-			</div>
-			<!-- End Auth Dropdown -->
-		</div>
-	</nav>
-</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <img
+      src="/static/img/logo.png"
+      alt="Fusionverse Logo"
+      width="30"
+      height="30"
+      class="img-fluid d-inline-block"
+    />
+    <a class="navbar-brand" href="/">&nbspFusionverse</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        {% for link in navbar %}
+        <li class="nav-item">
+          <a
+            class="nav-link{{' disabled' if link[2]}}{{' active' if link[0] == page}}"
+            href="{{link[1]}}"
+            >{{link[0]}}</a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- Begin Auth Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {% if session["auth"] %}
+        <img src="#" alt="Avatar" /> {{ session["auth"][1] }} {% else %}
+        <i class="bi bi-key"></i>&nbspYou are not logged in {% endif %}
+      </button>
+      <ul
+        class="dropdown-menu dropdown-menu-dark w-100 dropdown-menu-end"
+        aria-labelledby="dropdownMenuButton1"
+      >
+        {% if session["auth"] %}
+        <li>
+          <div><img src="#" alt="Avatar" />{{ session["auth"][1] }}</div>
+        </li>
+        <li><a class="dropdown-item" href="#">My Profile</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Logout</a></li>
+        {% else %}
+        <li><a class="dropdown-item" href="#">Login</a></li>
+        <li><a class="dropdown-item" href="#">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <!-- End Auth Dropdown -->
+  </div>
+</nav>

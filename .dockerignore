@@ -1,9 +1,4 @@
-./.obsidian/
-./.git/
-./.gitignore
-./venv/
-./README.md
-./.env
 ./app/.env
-./app/static/sass/bootstrap/
+./venv/
 ./app/static/css/icons/
+./app/static/sass/Bootstrap/
