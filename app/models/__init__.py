@@ -1,1 +1,1 @@
-from common.database import Database
+from common.database import Client
