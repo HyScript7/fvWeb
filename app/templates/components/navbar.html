@@ -24,7 +24,7 @@
         {% for link in navbar %}
         <li class="nav-item">
           <a
-            class="nav-link{{' disabled' if link[2]}}{{' active' if link[0] == page}}"
+            class="nav-link{{' disabled' if not link[2]}}{{' active' if link[0] == page}}"
             href="{{link[1]}}"
             >{{link[0]}}</a
           >
