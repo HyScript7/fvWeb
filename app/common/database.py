@@ -1,18 +1,17 @@
 import asyncio
 
-from common.configuration import (FVWEB_DATABASE, MONGO_URI, REDIS_HOST,
-                                  REDIS_PASS, REDIS_PORT)
+from common.configuration import MONGO_URI, REDIS_HOST, REDIS_PASS, REDIS_PORT
 from pymongo import MongoClient
-from pymongo.errors import ServerSelectionTimeoutError
+from pymongo.errors import CollectionInvalid, ServerSelectionTimeoutError
 
 import redis
 
 Redis = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASS, db=0)
 
-Client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+Mongo = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
 
 
-class Database:
+class DBClient:
     """Custom wrapper for PyMongo and Redis. Handles communication with MongoDB and caching using Redis"""
 
     def __init__(self, database: MongoClient, cache: redis.Redis):
@@ -33,7 +32,7 @@ class Database:
         for i in range(5):
             print(f"[{i+1}/5] Attempting to contact the database server")
             try:
-                Client.server_info()
+                self.mongo.server_info()
                 print(f"[{i+1}/5] Mongo Connection succeeded")
                 break
             except ServerSelectionTimeoutError:
@@ -47,7 +46,7 @@ class Database:
         for i in range(5):
             print(f"[{i+1}/5] Attempting to contact the caching server")
             try:
-                Redis.ping()
+                self.redis.ping()
                 print(f"[{i+1}/5] Redis Connection succeeded")
                 break
             except (redis.exceptions.ConnectionError, ConnectionRefusedError):
@@ -58,6 +57,9 @@ class Database:
                 print(f"[{i+1}/5] Redis verification override")
                 break
         return True
+    
+    def __call__(self) -> MongoClient:
+        return self.mongo
 
 
-Database = Database(Client, Redis)
+Client = DBClient(Mongo, Redis)
