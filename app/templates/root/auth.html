@@ -1,52 +1,56 @@
 {% extends "index.html" %}
 {% block content %}
 <main>
-    {% if menu == "login" %}
-    <div id="login-card" class="card text-bg-dark mb-3" style="max-width: 36rem;">
-        <div class="card-header">Login</div>
-        <div class="card-body">
-            <form method="post" action="/api/v1/auth/login">
-                <div class="mb-3">
-                    <label for="Username" class="form-label">Username</label>
-                    <input type="username" class="form-control" id="Username" name="username">
-                </div>
-                <div class="mb-3">
-                    <label for="Password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="Password" name="password">
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <p class="card-text">Don't have an account? <a href="/auth/register" class="link link-primary text-decoration-none">Register</a> here!</p>
-            </form>
+    <p><a href="/" class="link link-secondary text-decoration-none">&#60;&#60; Back</a></p>
+    <div class="d-flex justify-content-center py-5">
+        {% if menu == "login" %}
+        <div id="login-card" class="card text-bg-dark mb-3" style="max-width: 36rem; min-width:36rem;">
+            <div class="card-header">Login</div>
+            <div class="card-body">
+                <form method="post" action="/api/v1/auth/login">
+                    <div class="mb-3">
+                        <label for="Username" class="form-label">Username</label>
+                        <input type="username" class="form-control" id="Username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="Password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <p class="card-text">Don't have an account? <a href="/auth/register" class="link link-primary text-decoration-none">Register</a> here!</p>
+                </form>
+            </div>
         </div>
-    </div>
-    {% else %}
-    <div id="registration-card" class="card text-bg-dark mb-3" style="max-width: 36rem;">
-        <div class="card-header">Register</div>
-        <div class="card-body">
-            <form method="post" action="/api/v1/auth/register">
-                <div class="mb-3">
-                    <label for="Email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="Email" name="email">
-                </div>
-                <div class="mb-3">
-                    <label for="Username" class="form-label">Username</label>
-                    <input type="username" class="form-control" id="Username" name="username">
-                </div>
-                <div class="mb-3">
-                    <label for="Password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="Password" name="password">
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="TermsOfService" name="termsofservice">
-                    <label class="form-check-label" for="TermsOfService">I have read and accept the Terms of Service</label>
-                    <br>
-                    <input type="checkbox" class="form-check-input" id="PrivacyPolicy" name="privacypolicy">
-                    <label class="form-check-label" for="PrivacyPolicy">I have read and accept the Privacy Policy</label>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
+        {% else %}
+        <div id="registration-card" class="card text-bg-dark mb-3" style="max-width: 36rem; min-width:36rem;">
+            <div class="card-header">Register</div>
+            <div class="card-body">
+                <form method="post" action="/api/v1/auth/register">
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="Email" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Username" class="form-label">Username</label>
+                        <input type="username" class="form-control" id="Username" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="Password" name="password">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="TermsOfService" name="termsofservice">
+                        <label class="form-check-label" for="TermsOfService">I have read and accept the <a href="/terms" class="link link-primary text-decoration-none">Terms of Service</a></label>
+                        <br>
+                        <input type="checkbox" class="form-check-input" id="PrivacyPolicy" name="privacypolicy">
+                        <label class="form-check-label" for="PrivacyPolicy">I have read and accept the <a href="/privacy" class="link link-primary text-decoration-none">Privacy Policy</a></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                    <p class="card-text">Already have an account? <a href="/auth/login" class="link link-primary text-decoration-none">Login</a> here!</p>
+                </form>
+            </div>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
 </main>
 {% endblock %}
