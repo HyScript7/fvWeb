@@ -1,3 +1,6 @@
+# Local testing files
+testing_*
+
 # Compiled SASS
 *.scss.css
 *.scss.css.map
