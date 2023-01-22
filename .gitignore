@@ -1,5 +1,6 @@
 # Compiled SASS
 *.scss.css
+*.scss.css.map
 
 # CSS & JS Libraries
 app/static/js/bootstrap.min.js
