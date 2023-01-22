@@ -7,7 +7,7 @@ services:
     ports:
       - 5000
     environment:
-      - FLASK_SECRET=INSECURE_CHANGE_ME
+      - FLASK_SECRET=ciC2RWU5PgU0pSTD
       - FLASK_SESSION_LIFETIME=15
       - FLASK_PORT=5000
       - FLASK_DEBUG=true
@@ -19,6 +19,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_PASS=tVBGaV1ASIZavCwOSKxqZPxIXgIR1QZ0yb1LglZGvVjQ2Q7nfsgFxbrstvYbJpUz1f1szhjpc6MIoqH5PObEhzfPCWOxscRyRyZ
+      - PASSWORD_SECRET=Xo5Zj6fbeFE1EX1w
     depends_on:
       - db
       - redis

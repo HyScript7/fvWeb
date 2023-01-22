@@ -3,6 +3,8 @@ from socket import gethostname
 
 HOSTNAME: str = gethostname()
 
+PASSWORD_SALT = config("PASSWORD_SALT", "CH4NG3_M3")
+
 FLASK_SECRET: str = config("FLASK_SECRET", "CH4NG3_M3")
 FLASK_SESSION_LIFETIME: int = int(config("FLASK_SESSION_LIFETIME", 30))
 FLASK_PORT: int = int(config("FLASK_PORT", 5000))

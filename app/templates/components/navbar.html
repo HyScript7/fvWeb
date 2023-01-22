@@ -41,17 +41,17 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        {% if session["auth"] %}
-        <img src="#" alt="Avatar" /> {{ session["auth"][1] }} {% else %}
+        {% if session["signed_in"] %}
+        <img src="#" alt="Avatar" /> {{ session["username"] }} {% else %}
         <i class="bi bi-key"></i>&nbspYou are not logged in {% endif %}
       </button>
       <ul
         class="dropdown-menu dropdown-menu-dark w-100 dropdown-menu-end"
         aria-labelledby="dropdownMenuButton1"
       >
-        {% if session["auth"] %}
+        {% if session["signed_in"] %}
         <li>
-          <div><img src="#" alt="Avatar" />{{ session["auth"][1] }}</div>
+          <div><img src="#" alt="Avatar" />{{ session["username"] }}</div>
         </li>
         <li><a class="dropdown-item" href="/home/profile">My Profile</a></li>
         <li><a class="dropdown-item" href="/home/settings">Settings</a></li>
