@@ -65,38 +65,3 @@ async def logout():
         return Response("No session found", status=401)
     await sign_out(session)
     return Response("Signed out!", status=200)
-
-
-@api.route("/test")
-async def test():
-    results = {}
-    try:
-        result = await users.get_user_by_email("hyscript7@gmail.com")
-        results["query_email"] = f"Returned: {result}"
-    except Exception as e:
-        results["query_email"] = str(e)
-    try:
-        result = await users.get_user_by_username("HyScript7")
-        results["query_username"] = f"Returned: {result}"
-    except Exception as e:
-        results["query_username"] = str(e)
-    try:
-        result = await users.get_user_by_id(0)
-        results["query_id"] = f"Returned: {result}"
-    except Exception as e:
-        results["query_id"] = str(e)
-    try:
-        result = await users.is_taken_email("hyscript7@gmail.com")
-        results["query_taken_email"] = f"Returned: {result}"
-    except Exception as e:
-        results["query_taken_email"] = str(e)
-    try:
-        result = await users.is_taken_username("HyScript7")
-        results["query_taken_username"] = f"Returned: {result}"
-    except Exception as e:
-        results["query_taken_username"] = str(e)
-    document = "<html><head><title>Fusionverse API - Testing</title></head><body><ul>"
-    for i in results:
-        document += f"<li>{i} | {results[i]}</li>"
-    document += "</ul></body></html>"
-    return document
