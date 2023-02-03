@@ -1,10 +1,27 @@
 @import "./bootstrap/scss/functions";
 @import "./bootstrap/scss/variables";
 
-.bg-noise {
+.bg-light-noise {
+    background-color: rgba($color: $light, $alpha: 0.5);
+    background-image: url("/static/img/noise.png");
+}
+
+.bg-dark-noise {
     background-color: rgba($color: $dark, $alpha: 0.5);
     background-image: url("/static/img/noise.png");
 }
+
+.bg-light-noise-low {
+    background-color: rgba($color: $light, $alpha: 0.25);
+    background-image: url("/static/img/noise.png");
+}
+
+.bg-dark-noise-low {
+    background-color: rgba($color: $dark, $alpha: 0.25);
+    background-image: url("/static/img/noise.png");
+}
+
+
 
 body {
     background-image: url("/static/img/background.png");
