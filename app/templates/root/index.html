@@ -1,9 +1,18 @@
 {% extends "index.html" %}
 {% block content %}
 {% include "components/navbar.html" %}
-<main class="text-light">
-    <h1>Hello World!</h1>
-    <h2>Root</h2>
-</main>
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-noise-low">
+            {% include "components/sidebar.html" %}
+        </div>
+        <div class="col-lg-10 text-light">
+            <main>
+                <h1>Hello World!</h1>
+                <h2>Root</h2>
+            </main>
+        </div>
+    </div>
+</div>
 {% include "components/footer.html" %}
 {% endblock %}
