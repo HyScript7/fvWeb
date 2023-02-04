@@ -2,6 +2,7 @@ var editor = new Quill("#editor", {
   modules: { toolbar: "#toolbar" },
   theme: "snow",
 });
+
 $(document).ready(function () {
   $("#editor-controls").on("submit", function () {
     console.log("Submiting!");
