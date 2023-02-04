@@ -19,6 +19,9 @@ class Article:
         self.content: list[str] = document["content"]
         self.table: contentTable = contentTable(self.content)
 
+    async def push(self):
+        articles_db.find_one_and_replace({"_id": self.oid}, self.dump(self))
+
     @staticmethod
     def dump(article) -> dict:
         return {
@@ -34,36 +37,6 @@ class Article:
 
     @classmethod
     async def pull(cls, id: str):
-        # TODO: Replace this with production code
-        return cls(
-            {
-                "_id": "some-oid",
-                "id": "some-id",
-                "title": "Article Title",
-                "description": "Article Description",
-                "tags": ["Category 1", "Category 2"],
-                "author": "Some-UUID",
-                "created": 1670702154,
-                "edited": 1670788550,
-                "content": [
-                    "# Title",
-                    "Hello! This is the totally loaded from database and not hardcoded article content used for testing.",
-                    "## Sub Title 1",
-                    "This is some text under the first sub title",
-                    "### Sub Sub Title 1",
-                    "Here is some more text under a sub sub title",
-                    "### Sub Sub Title 2",
-                    "Here is some markdown text and an HTML link",
-                    "<a href='/' class='link-secondary-dark text-decoration-none'>This link leads to Home</a>",
-                    "## Sub Title 2",
-                    "### Sub Sub Title 1",
-                    "I don't know what to write anymore...",
-                    "### Sub Sub Title 2",
-                    "<hr>",
-                    "This is the last sentence.",
-                ],
-            }
-        )
         doc = articles_db.find_one({"id": id})
         if doc is None:
             raise NameError(f"An article with the ID '{id}' does not exist!")
@@ -76,6 +49,7 @@ class Article:
         description: str,
         tags: list[str],
         author: str,
+        created: int,
         content: list[str],
     ):
         id = await new_uuid()
@@ -86,6 +60,7 @@ class Article:
                 "description": description,
                 "tags": tags,
                 "author": author,
+                "created": created,
                 "content": content,
             }
         )
