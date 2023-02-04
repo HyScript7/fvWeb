@@ -1,6 +1,6 @@
 from common.route_vars import css, js, navbar
 from common.configuration import HOSTNAME
-from flask import Blueprint, render_template, send_file, redirect
+from flask import Blueprint, render_template, send_file, redirect, request
 
 web = Blueprint("root", __name__)
 
@@ -16,16 +16,21 @@ async def authentication_redirect():
     return redirect("/auth/login")
 
 
-@web.route("/auth/<request>")
-async def authentication(request: str):
-    if request.lower() == "login":
-        request = "login"
-    elif request.lower() == "register":
-        request = "register"
+@web.route("/auth/<action>")
+async def authentication(action: str):
+    error = request.args.get("error")
+    if error is None:
+        error = 0
     else:
-        request = "login"
+        error = int(error)
+    if action.lower() == "login":
+        action = "login"
+    elif action.lower() == "register":
+        action = "register"
+    else:
+        action = "login"
     return render_template(
-        "root/auth.html", page="Auth", title=request, css=css, js=js, navbar=navbar, menu=request
+        "root/auth.html", page="Auth", title=action, css=css, js=js, navbar=navbar, menu=action, error=error
     )
 
 

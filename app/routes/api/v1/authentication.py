@@ -1,4 +1,4 @@
-from flask import Response, request, session
+from flask import Response, request, session, redirect
 from models import users
 
 from . import api
@@ -29,9 +29,9 @@ async def login():
         return Response("Invalid Arguments", status=400)
     User = await users.User.login(await users.User.pull(username), username, await users.hash_password(password))
     if User is None:
-        return Response("Invalid Credentials or User does not exist", status=400)
+        return redirect("/auth/login?error=1", Response=Response("Invalid Credentials or User does not exist", status=400))
     await sign_in(session, User)
-    return Response("Signed in!", status=200)
+    return redirect("/", Response=Response("Signed in!", status=200))
 
 
 @api.route("/auth/register", methods=["POST"])
@@ -51,12 +51,12 @@ async def register():
     ]:
         return Response("Invalid Arguments", status=400)
     if not terms or not privacy:
-        return Response("Terms or Privacy Not Accepted", status=400)
+        return redirect("/auth/register?error=2", Response=Response("Terms or Privacy Not Accepted", status=400))
     User = await users.User.register(username, await users.hash_password(password), email)
     if User is None:
-        return Response("Username or Email already registered!", status=400)
+        return redirect("/auth/register?error=3", Response=Response("Username or Email already registered!", status=400))
     await sign_in(session, User)
-    return Response("Registered!", status=200)
+    return redirect("/", Response=Response("Registered!", status=200))
 
 
 @api.route("/auth/logout", methods=["GET", "POST"])
@@ -64,4 +64,4 @@ async def logout():
     if not session["signed_in"]:
         return Response("No session found", status=401)
     await sign_out(session)
-    return Response("Signed out!", status=200)
+    return redirect("/", Response=Response("Signed out!", status=200))

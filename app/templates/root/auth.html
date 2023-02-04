@@ -1,7 +1,26 @@
 {% extends "index.html" %}
 {% block content %}
 <main>
-    <p><a href="/" class="link link-secondary text-decoration-none">&#60;&#60; Back</a></p>
+    <div class="row">
+        <div class="col-1">
+            <p><a href="/" class="link link-secondary text-decoration-none">&#60;&#60; Back</a></p>
+        </div>
+        <div class="col-10">
+            {% if error %}
+            <br>
+            <div class="alert alert-danger">
+                {% if error == 1 %}
+                    Invalid credentials: Please make sure you provide the correct username and password!
+                {% elif error == 2 %}
+                    Terms Rejected: You must accept the Terms of Service and Privacy Policy!
+                {% elif error == 3%}
+                    Already taken: The username or email are already registered!
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-1"></div>
+    </div>
     <div class="d-flex justify-content-center py-5">
         {% if menu == "login" %}
         <div id="login-card" class="card text-bg-dark mb-3" style="max-width: 36rem; min-width:36rem;">
