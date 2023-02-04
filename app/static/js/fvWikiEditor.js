@@ -5,7 +5,6 @@ var editor = new Quill("#editor", {
 
 $(document).ready(function () {
   $("#editor-controls").on("submit", function () {
-    console.log("Submiting!");
     var hvalue = $(".ql-editor").html();
     hvalue = hvalue.replace(/></g, ">\n<");
     $(this).append(
@@ -14,7 +13,6 @@ $(document).ready(function () {
   });
   // reset
   $("#editor-controls").on("reset", function () {
-    console.log("Resetting!");
     editor.setContents([{ insert: "\n" }]);
   });
 });
