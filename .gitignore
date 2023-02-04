@@ -10,6 +10,7 @@ app/static/js/bootstrap.min.js
 app/static/js/jquery-3.6.1.min.js
 app/static/js/popper.min.js
 app/static/js/quill.min.js
+app/static/css/quill.snow.css
 app/static/css/icons/
 app/static/sass/bootstrap/
 
