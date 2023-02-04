@@ -1,15 +1,11 @@
 import hashlib
-import uuid
 
 from common.configuration import FVWEB_COLLECTION_USERS, FVWEB_DATABASE, PASSWORD_SALT
+from common.ids import new_uuid
 
 from . import Client
 
 users_db = Client()[FVWEB_DATABASE][FVWEB_COLLECTION_USERS]
-
-
-async def new_uuid() -> str:
-    return str(uuid.uuid3(uuid.uuid1(), uuid.uuid4().hex).hex)
 
 
 async def hash_password(password: str) -> str:
