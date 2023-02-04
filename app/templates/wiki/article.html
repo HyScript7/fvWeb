@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+{% block content %}
+{% include "components/navbar.html" %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-noise-low">
+            {% include "components/sidebar.html" %}
+        </div>
+        <div class="col-lg-10 text-light px-0">
+            <div class="bg-light-noise px-0">
+                <!-- Status Bar / Tools -->
+                <a class="link-secondary-dark text-decoration-none" href="/wiki/edit/{{id}}">Edit</a>
+            </div>
+            <main class="px-2">
+                <div class="container-fluid">
+                    <br>
+                    <div class="float-lg-start w-50">
+                        <div class="table-responsive mx-2 border border-2 border-dark bg-dark-noise">
+                            <table class="table border-dark border-0 text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            <h2>Table of Content</h2>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in content[0] %}
+                                    <tr>
+                                        <td scope="row">
+                                            <a class="text-decoration-none link-secondary" href="#Title{{i[0]}}"><div>{{i[1].strip("#")}}</div></a>
+                                        </td>
+                                        <td scope="row">
+                                            {{i[0]}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <article>
+                        {% for i in content[1] %}
+                            {% if i.startswith("#") and i.replace("#", "").startswith(" ") %}
+                                {% for x in content[0] %}
+                                    {% if x[1] == i %}
+                                    <a id="Title{{x[0]}}"></a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% if i.startswith("<") and i.endswith(">") %}
+                                {{ i | safe }}
+                            {% else %}
+                                {{ i | markdown }}
+                            {% endif %}
+                        {% endfor %}
+                    </article>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% include "components/footer.html" %}
+{% endblock %}
