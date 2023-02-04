@@ -27,9 +27,10 @@ async def login():
         None if not (len(username) or len(password)) else True,
     ]:
         return Response("Invalid Arguments", status=400)
-    User = await users.User.login(await users.User.pull(username), username, await users.hash_password(password))
+    User = await users.User.pull(username)
     if User is None:
         return redirect("/auth/login?error=1", Response=Response("Invalid Credentials or User does not exist", status=400))
+    User = await users.User.login(User, username, await users.hash_password(password))
     await sign_in(session, User)
     return redirect("/", Response=Response("Signed in!", status=200))
 
