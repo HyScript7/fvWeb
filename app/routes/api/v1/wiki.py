@@ -6,6 +6,10 @@ from models import wiki
 from . import api
 
 
+async def parse_editor_content(content: str) -> list[str]:
+    return content.replace("\r", "").split("\n")
+
+
 @api.route("/wiki/save")
 async def article_create():
     title = request.args.get("title", None)
@@ -17,6 +21,7 @@ async def article_create():
     if None in [title, description, tags, author, content]:
         return Response("Invalid Arguments", status=400)
     # TODO: Check if the user has permissions to create articles
+    content = await parse_editor_content(content)
     Article = await wiki.Article.new(
         title=title,
         description=description,
@@ -52,7 +57,7 @@ async def article_save(id):
     Article.description = description
     Article.tags = tags.replace(", ", ",").split(",")
     Article.author = author
-    Article.content = content
+    Article.content = await parse_editor_content(content)
     Article.created = created
     await Article.push()
     return redirect(
