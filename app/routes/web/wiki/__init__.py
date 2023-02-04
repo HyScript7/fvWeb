@@ -93,6 +93,7 @@ async def editor_existing(id):
         article: Article = await Article.pull(id)
     except NameError:
         return redirect(f"/wiki/article/{id}")
+    original_author = await get_user_by_id(article.author)
     return render_template(
         "wiki/editor.html",
         page="Wiki",
@@ -103,7 +104,7 @@ async def editor_existing(id):
         content=article.content,
         id=article.id,
         article_title=article.title,
-        author=[article.author, await get_user_by_id(article.author)],
+        author=[original_author.id, original_author.username],
         description=article.description,
         tags=article.tags,
         created=article.created,
