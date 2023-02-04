@@ -1,6 +1,6 @@
-from common.route_vars import css, js, navbar
 from common.configuration import HOSTNAME
-from flask import Blueprint, render_template, send_file, redirect, request
+from common.route_vars import css, js, navbar
+from flask import Blueprint, redirect, render_template, request, send_file
 
 web = Blueprint("root", __name__)
 
@@ -8,8 +8,15 @@ web = Blueprint("root", __name__)
 @web.route("/")
 async def root():
     return render_template(
-        "root/index.html", page="Home", title="", css=css, js=js, navbar=navbar, hostname=HOSTNAME
+        "root/index.html",
+        page="Home",
+        title="",
+        css=css,
+        js=js,
+        navbar=navbar,
+        hostname=HOSTNAME,
     )
+
 
 @web.route("/auth")
 async def authentication_redirect():
@@ -30,7 +37,14 @@ async def authentication(action: str):
     else:
         action = "login"
     return render_template(
-        "root/auth.html", page="Auth", title=action, css=css, js=js, navbar=navbar, menu=action, error=error
+        "root/auth.html",
+        page="Auth",
+        title=action,
+        css=css,
+        js=js,
+        navbar=navbar,
+        menu=action,
+        error=error,
     )
 
 

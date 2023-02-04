@@ -1,6 +1,6 @@
 from common.configuration import FVWEB_COLLECTION_ARTICLES, FVWEB_DATABASE
-from common.wiki import contentTable
 from common.ids import new_uuid
+from common.wiki import contentTable
 
 from . import Client
 
