@@ -1,6 +1,25 @@
 @import "./bootstrap/scss/functions";
 @import "./bootstrap/scss/variables";
 
+$primary:        $indigo-500;
+$primary-dark:   $indigo-700;
+$secondary:      $purple-500;
+$secondary-dark: $purple-900;
+
+$theme-colors: (
+  "primary":        $primary,
+  "primary-dark":   $primary-dark,
+  "secondary":      $secondary,
+  "grey":           $gray-600,
+  "secondary-dark": $secondary-dark,
+  "success":        $success,
+  "info":           $info,
+  "warning":        $warning,
+  "danger":         $danger,
+  "light":          $light,
+  "dark":           $dark
+);
+
 .bg-light-noise {
     background-color: rgba($color: $light, $alpha: 0.5);
     background-image: url("/static/img/noise.png");
