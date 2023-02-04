@@ -1,0 +1,174 @@
+{% extends "index.html" %}
+{% block content %}
+{% include "components/navbar.html" %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 bg-dark-noise-low">
+            {% include "components/sidebar.html" %}
+        </div>
+        <div class="col-lg-10 text-light px-0">
+            <div class="bg-light-noise px-0">
+                <!-- Status Bar / Tools -->
+                <span class="d-inline-block">
+                    {% if id %}
+                    <a class="link-secondary-dark text-decoration-none" href="/wiki/article/{{id}}">Discard</a>
+                    {% else %}
+                    <a class="link-secondary-dark text-decoration-none" href="/wiki/">Return</a>
+                    {% endif %}
+                </span>
+                &nbsp
+                <span class="d-inline-block">
+                    <form>
+                    {% if id %}
+                    <a class="link-secondary-dark text-decoration-none" onclick="window.location.href = '/wiki/editor?content=' + encodeURIComponent($('.ql-editor').html());" href="#">Copy</a>
+                    {% endif %}
+                    </form>
+                </span>
+            </div>
+            <main class="px-2">
+                <br>
+                <div class="container-fluid position-relative">
+                    <div id="toolbar" class="bg-light text-dark">
+                        <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <button class="ql-underline"></button>
+                            <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-blockquote"></button>
+                            <button class="ql-code-block"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="ordered"></button>
+                            <button class="ql-list" value="bullet"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-script" value="sub"></button>
+                            <button class="ql-script" value="super"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-link"></button>
+                            <button class="ql-image"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-indent" value="-1"></button>
+                            <button class="ql-indent" value="+1"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-size">
+                                <option value="small"></option>
+                                <option selected></option>
+                                <option value="large"></option>
+                                <option value="huge"></option>
+                            </select>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-header">
+                                <option value="1"></option>
+                                <option value="2"></option>
+                                <option value="3"></option>
+                                <option value="4"></option>
+                                <option value="5"></option>
+                                <option value="6"></option>
+                                <option selected value="7"></option>
+                            </select>
+                        </span>
+
+                        <span class="ql-formats">
+                            <select class="ql-color"></select>
+                            <select class="ql-background"></select>
+                        </span>
+
+                        <span class="ql-formats">
+                            <select class="ql-font"></select>
+                        </span>
+
+                        <span class="ql-formats">
+                            <button class="ql-align" value=""></button>
+                            <button class="ql-align" value="center"></button>
+                            <button class="ql-align" value="right"></button>
+                            <button class="ql-align" value="justify"></button>
+                        </span>
+
+                        <span class="ql-formats">
+                            <button class="ql-clean"></button>
+                        </span>
+                    </div>
+                    <div id="editor" class="container-fluid bg-light text-dark">
+                        {% if content %}
+                            {% for i in content %}
+                                {% if i.startswith("<") and i.endswith(">") %}
+                                    {{ i | safe }}
+                                {% else %}
+                                    {{ i | markdown }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="container-fluid py-2 bg-light">
+                        <form id="editor-controls">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Title</span>
+                            {% if article_title %}
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Article Title" value="{{article_title}}">
+                            {% else %}
+                                <input type="text" class="form-control" name="title" id="title" placeholder="Article Title">
+                            {% endif %}
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Description</span>
+                            {% if description %}
+                                <input type="text" class="form-control" name="description" id="description" placeholder="Article Description" value="{{description}}">
+                            {% else %}
+                                <input type="text" class="form-control" name="description" id="description" placeholder="Article Description">
+                            {% endif %}
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Tags</span>
+                            {% if article_title %}
+                                <input type="text" class="form-control" name="tags" id="tags" placeholder="Some Tag, Another Tag" value="{{', '.join(tags)}}">
+                            {% else %}
+                                <input type="text" class="form-control" name="tags" id="tags" placeholder="Some Tag, Another Tag">
+                            {% endif %}
+                            </div>
+
+                            {% if author %}
+                                {% if author == session['id'] %}
+                                    <input type="hidden" name="author" value="{{author[0]}}">
+                                {% else %}
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Author</span>
+                                        <select class="form-select" name="author" id="author">
+                                            <option selected value="{{author[0]}}">(Original Author) {{author[1]}}</option>
+                                            <option value="{{session['id']}}">{{session['username']}}</option>
+                                        </select>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <input type="hidden" name="author" value="{{session['id']}}">
+                            {% endif %}
+
+                            {% if created %}
+                                <input type="hidden" name="created" value="{{created}}">
+                            {% endif %}
+
+                            <div class="btn-group w-100" role="group">
+                                {% if id %}
+                                <button type="submit" class="btn btn-primary" formaction="/api/v1/wiki/save/{{id}}">Save</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-primary" formaction="/api/v1/wiki/save">Create</button>
+                                {% endif %}
+                                <button type="reset" class="btn btn-primary" formaction="">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% include "components/footer.html" %}
+{% endblock %}
