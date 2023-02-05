@@ -16,6 +16,12 @@ async def parse_editor_content(content: str) -> list[str]:
 
 @api.route("/wiki/save")
 async def article_create():
+    try:
+        session["signed_in"]
+    except KeyError:
+        session["signed_in"] = False
+    if not session["signed_in"]:
+        return redirect("/auth/login")
     title = request.args.get("title", None)
     description = request.args.get("description", None)
     tags = request.args.get("tags", None)
@@ -41,6 +47,12 @@ async def article_create():
 
 @api.route("/wiki/save/<id>")
 async def article_save(id):
+    try:
+        session["signed_in"]
+    except KeyError:
+        session["signed_in"] = False
+    if not session["signed_in"]:
+        return redirect("/auth/login")
     title = request.args.get("title", None)
     description = request.args.get("description", None)
     tags = request.args.get("tags", None)
@@ -48,7 +60,7 @@ async def article_save(id):
     content = request.args.get("content", None)
     created = int(request.args.get("created", round(time.time())))
     if None in [title, description, tags, author, content, created]:
-        return Response("Invalid Arguments!", status=400)
+        return Response("Invalid Arguments", status=400)
     try:
         Article = await wiki.Article.pull(id)
     except NameError:
