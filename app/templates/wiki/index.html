@@ -10,6 +10,55 @@
             <main>
                 <h1>Hello World!</h1>
                 <h2>Wiki</h2>
+                {% for wiki_categories in wiki_rows %}
+                <div class="row">
+                    {% for category in wiki_categories %}
+                    <div class="col">
+                        <div class="card bg-dark text-light">
+                            <div class="card-header">
+                                {{category[0]}}
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item list-group-item-dark text-light bg-dark">
+                                    <div class="row">
+                                        <div class="col">
+                                            <b>Title</b>
+                                        </div>
+                                        <div class="col">
+                                            <b>Author</b>
+                                        </div>
+                                        <div class="col">
+                                            <b>Tags</b>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% for article in category[1] %}
+                                <li class="list-group-item list-group-item-primary-dark">
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="link-primary text-decoration-none" href="/wiki/article/{{article[0]}}">{{article[1]}}</a>
+                                        </div>
+                                        <div class="col">
+                                            <a class="link-primary text-decoration-none" href="/home/profile/{{article[2][0]}}">{{article[2][1]}}</a>
+                                        </div>
+                                        <div class="col">
+                                            {{", ".join(article[3])}}
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                {% if not category[1] %}
+                                <li class="list-group-item list-group-item-primary-dark">
+                                    There are currently no articles in this category, <a href="/wiki/editor" class="link-secondary text-decoration-none">create</a> one!
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <br>
+                {% endfor %}
             </main>
         </div>
     </div>

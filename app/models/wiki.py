@@ -3,6 +3,7 @@ from common.ids import new_uuid
 from common.wiki import contentTable
 
 from . import Client
+from .users import get_user_by_id
 
 articles_db = Client()[FVWEB_DATABASE][FVWEB_COLLECTION_ARTICLES]
 
@@ -65,3 +66,20 @@ class Article:
             }
         )
         return await cls.pull(id)
+
+
+async def find_articles(tags: list[str]) -> list[Article]:
+    results: list[Article] = []
+    for article in articles_db.find({"tags": {"$in": tags}}):
+        if article is None:
+            continue
+        article = Article(article)
+        results.append(
+            [
+                article.id,
+                article.title,
+                [article.author, (await get_user_by_id(article.author)).username],
+                article.tags,
+            ]
+        )
+    return results

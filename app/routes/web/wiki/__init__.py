@@ -1,15 +1,35 @@
 from common.route_vars import css, js, navbar
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, session
 from models.users import get_user_by_id
-from models.wiki import Article
+from models import wiki
 
 web = Blueprint("wiki", __name__)
 
 
 @web.route("/")
 async def root():
+    articles = [["some-uuid", "Test Article", ["Some tag", "another tag"]]]
     return render_template(
-        "wiki/index.html", page="Wiki", title="Wiki", css=css, js=js, navbar=navbar
+        "wiki/index.html",
+        page="Wiki",
+        title="Wiki",
+        css=css,
+        js=js,
+        navbar=navbar,
+        wiki_rows=[
+            [
+                ["Testing", await wiki.find_articles(["Testing"])],
+                ["My tag", await wiki.find_articles(["My tag"])],
+            ],
+            [
+                ["Red", await wiki.find_articles(["Red"])],
+                ["Green", await wiki.find_articles(["Green"])],
+                ["Blue", await wiki.find_articles(["Blue"])],
+            ],
+            [
+                ["Lonely", await wiki.find_articles(["Lonely"])],
+            ]
+        ],
     )
 
 
@@ -38,7 +58,7 @@ async def article_no_id():
 @web.route("/article/<id>")
 async def article(id: int):
     try:
-        article: Article = await Article.pull(id)
+        article: wiki.Article = await wiki.Article.pull(id)
         content = [article.table.simple, article.content]
         title = article.title
         id = article.id
@@ -66,6 +86,12 @@ async def article(id: int):
 
 @web.route("/editor/")
 async def editor_new():
+    try:
+        session["signed_in"]
+    except KeyError:
+        session["signed_in"] = False
+    if not session["signed_in"]:
+        return redirect("/auth/login")
     content = request.args.get("content", None)
     if not content is None:
         return render_template(
@@ -90,7 +116,13 @@ async def editor_new():
 @web.route("/editor/<id>")
 async def editor_existing(id):
     try:
-        article: Article = await Article.pull(id)
+        session["signed_in"]
+    except KeyError:
+        session["signed_in"] = False
+    if not session["signed_in"]:
+        return redirect("/auth/login")
+    try:
+        article: wiki.Article = await wiki.Article.pull(id)
     except NameError:
         return redirect(f"/wiki/article/{id}")
     original_author = await get_user_by_id(article.author)
