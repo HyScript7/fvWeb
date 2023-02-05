@@ -29,7 +29,7 @@ async def article_create():
     Article = await wiki.Article.new(
         title=title,
         description=description,
-        tags=tags,
+        tags=tags.replace(", ", ",").split(","),
         author=author,
         content=content,
         created=created,
