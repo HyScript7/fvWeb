@@ -136,7 +136,7 @@
                             </div>
 
                             {% if author %}
-                                {% if author == session['id'] %}
+                                {% if author[0] == session['id'] %}
                                     <input type="hidden" name="author" value="{{author[0]}}">
                                 {% else %}
                                     <div class="input-group mb-3">
