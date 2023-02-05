@@ -7,7 +7,11 @@ from . import api
 
 
 async def parse_editor_content(content: str) -> list[str]:
-    return content.replace("\r", "").split("\n")
+    content = content.replace("\r", "").split("\n")
+    for i, v in enumerate(content):
+        if v[0:3] in ["<h1", "<h2", "<h3", "<h4", "<h5", "<h6"] and v[len(v)-4:len(v)] in ["/h1>", "/h2>", "/h3>", "/h4>", "/h5>", "/h6>"]:
+            content[i] = int(v[2])*"#" + " " + v[4:len(v)-5]
+    return content
 
 
 @api.route("/wiki/save")
