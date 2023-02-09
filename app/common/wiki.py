@@ -1,3 +1,37 @@
+def is_title(html: str):
+    try:
+        if (
+            html.lower().startswith("<h")
+            and int(html[2]) in [1, 2, 3, 4, 5, 6]
+            and html.lower()[len(html) - 5 : len(html) - 2] == "</h"
+            and html.endswith(">")
+        ):
+            return True
+    except ValueError:
+        pass
+    return False
+
+
+def title_html_to_md(html: str):
+    title_text = ""
+    append = False
+    skipping = False
+    for i, v in enumerate(html):
+        if skipping and html[i - 1] != ">":
+            continue
+        skipping = False
+        if append and v == "<" and html[i + 1] == "/":
+            break
+        if append:
+            title_text += v
+            continue
+        if html[i - 5 : i] == "<span" or (v == ">" and not "<span" in html):
+            skipping = True
+            append = True
+    level = int(html.replace(" ", "")[2])
+    return level * "#" + " " + title_text
+
+
 class contentTable:
     def __init__(self, content: list):
         self.table = self.parse(content)

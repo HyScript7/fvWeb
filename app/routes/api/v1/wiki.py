@@ -9,8 +9,19 @@ from . import api
 async def parse_editor_content(content: str) -> list[str]:
     content = content.replace("\r", "").split("\n")
     for i, v in enumerate(content):
-        if v[0:3] in ["<h1", "<h2", "<h3", "<h4", "<h5", "<h6"] and v[len(v)-4:len(v)] in ["/h1>", "/h2>", "/h3>", "/h4>", "/h5>", "/h6>"]:
-            content[i] = int(v[2])*"#" + " " + v[4:len(v)-5]
+        if v.startswith("<span") and v.endswith("</span>"):
+            try:
+                if (
+                    content[i - 1].startswith("<h")
+                    and int(content[i - 1][2]) in [1, 2, 3, 4, 5, 6]
+                    and content[i + 1].startswith("</h")
+                    and int(content[i + 1][3]) in [1, 2, 3, 4, 5, 6]
+                ):
+                    content[i - 1] += v + content[i + 1]
+                    content.pop(i)
+                    content.pop(i)
+            except ValueError:
+                continue
     return content
 
 

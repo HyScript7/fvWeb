@@ -1,6 +1,6 @@
 from common.configuration import FVWEB_COLLECTION_ARTICLES, FVWEB_DATABASE
 from common.ids import new_uuid
-from common.wiki import contentTable
+from common.wiki import contentTable, is_title, title_html_to_md
 
 from . import Client
 from .users import get_user_by_id
@@ -18,7 +18,15 @@ class Article:
         self.author: str = document["author"]
         self.created: int = document["created"]
         self.content: list[str] = document["content"]
-        self.table: contentTable = contentTable(self.content)
+        # Since the contentTable object was originally written to work with markdown, we'll just parse the content to provide all titles to it as markdown.
+        parsed_content = []
+        for html in self.content:
+            if is_title(html):
+                parsed_content.append(title_html_to_md(html))
+                continue
+            parsed_content.append(html)
+        # Now we just create the content table object
+        self.table: contentTable = contentTable(parsed_content)
 
     async def push(self):
         articles_db.find_one_and_replace({"_id": self.oid}, self.dump(self))
