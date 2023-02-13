@@ -25,7 +25,7 @@ async def parse_editor_content(content: str) -> list[str]:
     return content
 
 
-@api.route("/wiki/save")
+@api.route("/wiki/save", methods=["GET", "POST"])
 async def article_create():
     try:
         session["signed_in"]
@@ -33,11 +33,18 @@ async def article_create():
         session["signed_in"] = False
     if not session["signed_in"]:
         return redirect("/auth/login")
-    title = request.args.get("title", None)
-    description = request.args.get("description", None)
-    tags = request.args.get("tags", None)
-    author = request.args.get("author", None)
-    content = request.args.get("content", None)
+    if request.method == "POST":
+        title = request.form.get("title", None)
+        description = request.form.get("description", None)
+        tags = request.form.get("tags", None)
+        author = request.form.get("author", None)
+        content = request.form.get("content", None)
+    else:
+        title = request.args.get("title", None)
+        description = request.args.get("description", None)
+        tags = request.args.get("tags", None)
+        author = request.args.get("author", None)
+        content = request.args.get("content", None)
     created = round(time.time())
     if None in [title, description, tags, author, content]:
         return Response("Invalid Arguments", status=400)
@@ -56,7 +63,7 @@ async def article_create():
     )
 
 
-@api.route("/wiki/save/<id>")
+@api.route("/wiki/save/<id>", methods=["GET", "POST"])
 async def article_save(id):
     try:
         session["signed_in"]
@@ -64,12 +71,20 @@ async def article_save(id):
         session["signed_in"] = False
     if not session["signed_in"]:
         return redirect("/auth/login")
-    title = request.args.get("title", None)
-    description = request.args.get("description", None)
-    tags = request.args.get("tags", None)
-    author = request.args.get("author", None)
-    content = request.args.get("content", None)
-    created = int(request.args.get("created", round(time.time())))
+    if request.method == "POST":
+        title = request.form.get("title", None)
+        description = request.form.get("description", None)
+        tags = request.form.get("tags", None)
+        author = request.form.get("author", None)
+        content = request.form.get("content", None)
+        created = int(request.form.get("created", round(time.time())))
+    else:
+        title = request.args.get("title", None)
+        description = request.args.get("description", None)
+        tags = request.args.get("tags", None)
+        author = request.args.get("author", None)
+        content = request.args.get("content", None)
+        created = int(request.args.get("created", round(time.time())))
     if None in [title, description, tags, author, content, created]:
         return Response("Invalid Arguments", status=400)
     try:
