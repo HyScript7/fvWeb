@@ -1,0 +1,4 @@
+./.env
+./example.env
+.pytest_cache/
+.pytest_cache/**
